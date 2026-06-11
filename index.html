@@ -2831,11 +2831,15 @@ ${bodyRows}
                 }
 
                 const rawData = result.data;
+                let dataRows = rawData;
 
-                // 첫 행이 헤더인 경우 제외
-                const dataRows = rawData.slice(0, 1).some(row =>
-                    String(row[0] || '').toLowerCase().includes('nickname')
-                ) ? rawData.slice(1) : rawData;
+                // 첫 행이 헤더인 경우 제외 (더 정확한 검사)
+                if (rawData.length > 0) {
+                    const firstRowStr = String(rawData[0][0] || '').toLowerCase();
+                    if (firstRowStr.includes('nickname') || firstRowStr.includes('닉네임')) {
+                        dataRows = rawData.slice(1);
+                    }
+                }
 
                 // {nickname, score, year, month, week, event} 형식으로 파싱
                 const records = dataRows.map(row => ({
@@ -2847,47 +2851,55 @@ ${bodyRows}
                     event: String(row[5] || '').trim() || EVENT_NONE
                 })).filter(r => r.nickname && r.score);
 
-                // 연도/월별로 그룹화
-                const byYearMonth = {};
+                if (records.length === 0) {
+                    throw new Error('유효한 데이터가 없습니다');
+                }
+
+                // 연도/월/주차/이벤트별로 그룹화
+                const byYearMonthWeekEvent = {};
                 records.forEach(record => {
-                    const key = sheetKey(record.year, record.month);
-                    if (!byYearMonth[key]) byYearMonth[key] = [];
-                    byYearMonth[key].push(record);
+                    const key = `${record.year}-${record.month}-${record.week}-${record.event}`;
+                    if (!byYearMonthWeekEvent[key]) byYearMonthWeekEvent[key] = [];
+                    byYearMonthWeekEvent[key].push(record);
                 });
 
                 // 각 연도/월의 sheet에 데이터 입력
-                Object.entries(byYearMonth).forEach(([key, records]) => {
-                    if (!appState.months[key]) {
-                        const month = monthFromSheetKey(key, appState.selectedMonth);
-                        appState.months[key] = makeDefaultSheet(month);
+                const processedYearMonths = new Set();
+                Object.entries(byYearMonthWeekEvent).forEach(([key, weekEventRecords]) => {
+                    const [year, month, week, event] = key.split('-');
+                    const yearMonth = `${year}-${month}`;
+                    const yearMonthKey = sheetKey(Number(year), Number(month));
+
+                    if (!appState.months[yearMonthKey]) {
+                        appState.months[yearMonthKey] = makeDefaultSheet(Number(month));
                     }
-                    const sheet = appState.months[key];
+                    const sheet = appState.months[yearMonthKey];
 
                     // 이벤트와 주차 설정
-                    const eventsByWeek = {};
-                    records.forEach(r => {
-                        if (!eventsByWeek[r.week]) eventsByWeek[r.week] = r.event;
+                    if (event && event !== EVENT_NONE && EVENTS.includes(event)) {
+                        setWeekEvent(sheet, Number(week), event);
+                    }
+
+                    // 해당 week의 닉네임/점수 열 찾기
+                    const nickCol = findSimpleWeekFieldColumn(sheet, Number(week), '닉네임');
+                    const scoreCol = findSimpleWeekFieldColumn(sheet, Number(week), '점수');
+                    if (nickCol < 0 || scoreCol < 0) return;
+
+                    // 이 주차에 기존 데이터 제거
+                    sheet.rows.forEach(row => {
+                        row.cells[nickCol] = '';
+                        row.cells[scoreCol] = '';
                     });
-                    Object.entries(eventsByWeek).forEach(([week, eventName]) => {
-                        if (eventName && eventName !== EVENT_NONE) {
-                            setWeekEvent(sheet, Number(week), eventName);
+
+                    // 새 데이터 입력 (순서대로)
+                    weekEventRecords.forEach((record, index) => {
+                        if (index < sheet.rows.length) {
+                            sheet.rows[index].cells[nickCol] = record.nickname;
+                            sheet.rows[index].cells[scoreCol] = record.score;
                         }
                     });
 
-                    // 데이터 입력
-                    records.forEach(record => {
-                        const nickCol = findSimpleWeekFieldColumn(sheet, record.week, '닉네임');
-                        const scoreCol = findSimpleWeekFieldColumn(sheet, record.week, '점수');
-                        if (nickCol < 0 || scoreCol < 0) return;
-
-                        for (let i = 0; i < sheet.rows.length; i++) {
-                            if (!sheet.rows[i].cells[nickCol]) {
-                                sheet.rows[i].cells[nickCol] = record.nickname;
-                                sheet.rows[i].cells[scoreCol] = record.score;
-                                break;
-                            }
-                        }
-                    });
+                    processedYearMonths.add(yearMonthKey);
                 });
 
                 saveSheetData({ silent: true });
