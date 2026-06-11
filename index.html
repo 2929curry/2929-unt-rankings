@@ -107,154 +107,6 @@
             white-space: nowrap;
         }
 
-        .data-import-btn {
-            padding: 8px 14px;
-            border: 1px solid #d8dee8;
-            border-radius: 8px;
-            background: linear-gradient(#fff, #f8fafc);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 700;
-            transition: all 0.15s ease;
-        }
-
-        .data-import-btn:hover {
-            background: #f8fafc;
-            color: var(--accent-ink);
-            border-color: #F8C7D6;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            padding: 24px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .modal-header {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text);
-        }
-
-        .modal-body {
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d8dee8;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #F8C7D6;
-            box-shadow: 0 0 0 3px rgba(232, 33, 39, 0.10);
-        }
-
-        .form-hint {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 6px;
-        }
-
-        .modal-footer {
-            display: flex;
-            gap: 8px;
-            justify-content: flex-end;
-        }
-
-        .modal-footer button {
-            min-height: 34px;
-            padding: 7px 16px;
-            border: 1px solid #d8dee8;
-            border-radius: 8px;
-            background: linear-gradient(#fff, #f8fafc);
-            color: var(--text);
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 13px;
-            transition: all 0.15s ease;
-        }
-
-        .modal-footer button:hover {
-            background: #f8fafc;
-            border-color: #F8C7D6;
-            color: var(--accent-ink);
-        }
-
-        .modal-footer .primary-btn {
-            background: #111827;
-            border-color: #111827;
-            color: #fff;
-        }
-
-        .modal-footer .primary-btn:hover {
-            background: #242b38;
-            border-color: #242b38;
-            color: #fff;
-        }
-
-        .status-message {
-            padding: 10px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: none;
-        }
-
-        .status-message.success {
-            background: #d1fae5;
-            color: #065f46;
-            display: block;
-        }
-
-        .status-message.error {
-            background: #fee2e2;
-            color: #991b1b;
-            display: block;
-        }
-
         .event-tabs {
             display: flex;
             gap: 8px;
@@ -350,6 +202,15 @@
             margin-bottom: 0;
         }
 
+        .stage-title {
+            margin: 24px 0 12px;
+            padding-left: 10px;
+            border-left: 4px solid #d8dee8;
+            color: #374151;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
         .ranking-list {
             display: flex;
             flex-direction: column;
@@ -441,6 +302,448 @@
             font-weight: 700;
         }
 
+        .sheet-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sheet-menubar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sheet-menu {
+            position: relative;
+        }
+
+        .sheet-menu summary {
+            list-style: none;
+            user-select: none;
+        }
+
+        .sheet-menu summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .sheet-menu[open] summary {
+            background: var(--accent-soft);
+            border-color: #F8C7D6;
+            color: var(--accent-ink);
+        }
+
+        .sheet-menu-panel {
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            z-index: 20;
+            display: grid;
+            min-width: 194px;
+            gap: 6px;
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(17, 24, 39, 0.16);
+        }
+
+        .sheet-menu-panel button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        .sheet-menu-panel .danger-button {
+            color: #9f1239;
+        }
+
+        .sheet-menu-panel button:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+        }
+
+        .zoom-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            padding: 4px 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            background: #f8fafc;
+        }
+
+        .zoom-button {
+            width: 30px;
+            min-height: 28px;
+            padding: 0;
+            border-radius: 999px;
+            font-size: 14px;
+        }
+
+        .zoom-value {
+            min-width: 44px;
+            color: var(--accent-ink);
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .zoom-slider {
+            width: 96px;
+            accent-color: var(--accent);
+        }
+
+        .rank-view-controls,
+        .sheet-control-strip,
+        .formula-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .rank-view-controls label,
+        .sheet-control-strip label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 38px;
+            padding: 4px 4px 4px 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            background: #f8fafc;
+            color: #4b5563;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        select,
+        .formula-input {
+            min-height: 34px;
+            border: 1px solid #d8dee8;
+            border-radius: 999px;
+            background: #fff;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        select {
+            min-width: 94px;
+            appearance: none;
+            padding: 7px 34px 7px 12px;
+            background:
+                linear-gradient(45deg, transparent 50%, var(--accent-ink) 50%) calc(100% - 17px) 50% / 6px 6px no-repeat,
+                linear-gradient(135deg, var(--accent-ink) 50%, transparent 50%) calc(100% - 12px) 50% / 6px 6px no-repeat,
+                linear-gradient(#fff, #f8fafc);
+            box-shadow: 0 1px 2px rgba(17, 24, 39, 0.06);
+            cursor: pointer;
+        }
+
+        select:hover {
+            border-color: #F8C7D6;
+            color: var(--accent-ink);
+            background:
+                linear-gradient(45deg, transparent 50%, var(--accent) 50%) calc(100% - 17px) 50% / 6px 6px no-repeat,
+                linear-gradient(135deg, var(--accent) 50%, transparent 50%) calc(100% - 12px) 50% / 6px 6px no-repeat,
+                #fff;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #F8C7D6;
+            box-shadow: 0 0 0 3px rgba(232, 33, 39, 0.10);
+        }
+
+        .view-week-select {
+            min-width: 104px;
+        }
+
+        .week-event-select {
+            min-width: 132px;
+            color: var(--accent-ink);
+        }
+
+        .week-event-select.none-selected {
+            width: 84px;
+            min-width: 84px;
+            padding-left: 10px;
+            padding-right: 24px;
+            color: #6b7280;
+        }
+
+        .week-event-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .week-event-label span {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .event-name.none-week {
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .event-name.none-week .week-event-label span {
+            display: none;
+        }
+
+        .formula-input {
+            width: min(520px, 100%);
+            flex: 1 1 260px;
+            padding: 7px 10px;
+        }
+
+        .formula-bar {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid var(--soft-border);
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+
+        .active-cell-label {
+            min-width: 54px;
+            padding: 7px 9px;
+            border: 1px solid #d8dee8;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--accent-ink);
+            font-size: 12px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .sheet-control-strip {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid var(--soft-border);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .sheet-actions .primary-button {
+            background: #111827;
+            border-color: #111827;
+            color: #fff;
+        }
+
+        .sheet-menu-panel .primary-button {
+            background: #111827;
+            border-color: #111827;
+            color: #fff;
+        }
+
+        .sheet-actions .primary-button:hover,
+        .sheet-menu-panel .primary-button:hover {
+            background: #242b38;
+            border-color: #242b38;
+            color: #fff;
+        }
+
+        .sheet-actions .danger-button {
+            color: #9f1239;
+        }
+
+        .sheet-status {
+            min-width: 130px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .sheet-wrap {
+            width: 100%;
+            max-height: calc(100vh - 300px);
+            min-height: 420px;
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .weekly-table {
+            width: max-content;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: fixed;
+            color: var(--text);
+            font-size: 12px;
+        }
+
+        .weekly-table th,
+        .weekly-table td {
+            border-right: 1px solid var(--soft-border);
+            border-bottom: 1px solid var(--soft-border);
+            background: #fff;
+        }
+
+        .weekly-table th {
+            height: 34px;
+            padding: 8px 10px;
+            background: #f8fafc;
+            color: #374151;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .weekly-table thead th {
+            position: sticky;
+            z-index: 5;
+        }
+
+        .weekly-table thead tr:first-child th {
+            top: 0;
+        }
+
+        .weekly-table thead tr:nth-child(2) th {
+            top: 34px;
+        }
+
+        .weekly-table thead tr:nth-child(3) th {
+            top: 68px;
+        }
+
+        .weekly-table thead tr:nth-child(4) th {
+            top: 102px;
+        }
+
+        .rank-head,
+        .rank-cell {
+            position: sticky;
+            left: 0;
+            width: 54px;
+            min-width: 54px;
+            z-index: 6;
+            background: #f8fafc !important;
+        }
+
+        .weekly-table thead .rank-head {
+            z-index: 8;
+        }
+
+        .rank-cell {
+            color: #4b5563;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .week-name {
+            border-left: 2px solid #d8dee8;
+        }
+
+        .column-head {
+            color: #3730a3;
+        }
+
+        .event-name {
+            color: var(--accent-ink);
+            background: var(--accent-soft) !important;
+        }
+
+        .none-week {
+            background: #f3f4f6 !important;
+            color: #9ca3af !important;
+        }
+
+        .column-label {
+            min-width: 126px;
+        }
+
+        .week-none-col {
+            width: 56px !important;
+            min-width: 56px !important;
+            max-width: 56px !important;
+            padding-left: 4px !important;
+            padding-right: 4px !important;
+            color: #c4c7ce !important;
+        }
+
+        .column-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #3730a3;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .nickname-col {
+            width: 154px;
+        }
+
+        .score-col {
+            width: 116px;
+        }
+
+        .rank-col {
+            width: 54px;
+        }
+
+        .sheet-cell {
+            min-height: 34px;
+            padding: 8px 10px;
+            outline: none;
+            overflow: hidden;
+            color: var(--text);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sheet-cell.selected {
+            background: #eef6ff;
+            box-shadow: inset 0 0 0 1px #60a5fa;
+        }
+
+        .sheet-cell.formula {
+            color: #1d4ed8;
+        }
+
+        .sheet-cell.error {
+            color: #b91c1c;
+            background: #fff1f2;
+            font-weight: 700;
+        }
+
+        .sheet-cell:focus {
+            background: #fff7ed;
+            box-shadow: inset 0 0 0 2px #F8C7D6;
+        }
+
+        .sheet-cell.dirty {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .sheet-cell.score {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .sheet-cell.readonly {
+            min-height: 28px;
+            cursor: default;
+            background: #f3f4f6;
+        }
+
         .empty-rank-message {
             padding: 18px;
             border: 1px dashed #d8dee8;
@@ -457,12 +760,14 @@
                 padding: 10px;
             }
 
-            .rank-header {
+            .rank-header,
+            .section-head {
                 align-items: flex-start;
                 flex-direction: column;
             }
 
-            .version-badge {
+            .version-badge,
+            .sheet-status {
                 text-align: left;
             }
 
@@ -483,6 +788,10 @@
             .player-name {
                 font-size: 13px;
             }
+
+            .sheet-wrap {
+                max-height: calc(100vh - 280px);
+            }
         }
     </style>
 </head>
@@ -494,322 +803,1649 @@
                 <p class="rank-subtitle">이벤트별 순위</p>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
-                <button class="data-import-btn" onclick="openDataModal()">📊 데이터 import</button>
+                <button class="data-import-btn" onclick="openDataModal()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">📊 데이터 import</button>
                 <span class="version-badge">Local/Web</span>
             </div>
         </header>
 
-        <div id="dataModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">데이터 import</div>
-                <div id="statusMessage" class="status-message"></div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>데이터 소스 유형</label>
-                        <select id="sourceType" onchange="updateSourceHint()">
-                            <option value="csv">CSV 파일 URL</option>
-                            <option value="google">Google Sheets (공개)</option>
-                        </select>
-                        <div class="form-hint" id="sourceHint">CSV 파일의 직접 다운로드 링크를 입력하세요</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>URL</label>
-                        <input type="text" id="dataUrl" placeholder="https://example.com/data.csv">
-                    </div>
-
-                    <div class="form-group">
-                        <label>이벤트 선택</label>
-                        <select id="eventSelect"></select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="closeDataModal()">취소</button>
-                    <button class="primary-btn" onclick="importData()">불러오기</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="addEventModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">이벤트 추가</div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>이벤트명</label>
-                        <input type="text" id="newEventName" placeholder="예: 6월 준비전, 6월 연맹 총동원 등">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button onclick="closeAddEventModal()">취소</button>
-                    <button class="primary-btn" onclick="addNewEvent()">추가</button>
-                </div>
-            </div>
-        </div>
-
         <div class="event-tabs">
-            <div id="eventTabsContainer" style="display: flex; gap: 8px; flex: 1;"></div>
-            <button type="button" class="tab-button" style="background: #d1fae5; color: #065f46; border-color: #6ee7b7;" onclick="openAddEventModal()">+ 이벤트 추가</button>
+            <button type="button" class="tab-button active" data-event-target="weekly-entry" onclick="showEvent('weekly-entry', this)">주차 입력표</button>
+            <button type="button" class="tab-button" style="background: #d1fae5; color: #065f46; border-color: #6ee7b7; margin-left: auto;" onclick="openAddEventModal()">+ 이벤트 추가</button>
         </div>
 
-        <div id="eventSectionsContainer"></div>
+
+        <div id="weekly-entry" class="event-section">
+            <div class="section-head">
+                <h2 class="event-title" id="sheetTitle">6월 주차별 랭킹 입력</h2>
+                <div class="sheet-menubar">
+                    <details class="sheet-menu">
+                        <summary>파일(File)</summary>
+                        <div class="sheet-menu-panel">
+                            <button type="button" class="primary-button" id="saveSheetBtn">저장(Save)</button>
+                            <button type="button" id="downloadExcelBtn">엑셀로 변환(Excel)</button>
+                            <button type="button" id="undoSheetBtn">실행취소(Undo)</button>
+                            <button type="button" id="redoSheetBtn">다시 실행(Redo)</button>
+                        </div>
+                    </details>
+                    <details class="sheet-menu">
+                        <summary>수정(Edit)</summary>
+                        <div class="sheet-menu-panel">
+                            <button type="button" id="addRowBtn">행 추가(Add Row)</button>
+                            <button type="button" id="deleteRowBtn">행 삭제(Delete Row)</button>
+                            <button type="button" class="danger-button" id="clearSheetBtn">월 데이터 초기화(Clear Month)</button>
+                        </div>
+                    </details>
+                    <div class="zoom-control" aria-label="표 확대 축소">
+                        <button type="button" class="zoom-button" id="zoomOutBtn" aria-label="축소">-</button>
+                        <input class="zoom-slider" id="zoomSlider" type="range" min="70" max="140" step="5" value="100" aria-label="확대 비율">
+                        <span class="zoom-value" id="zoomValue">100%</span>
+                        <button type="button" class="zoom-button" id="zoomInBtn" aria-label="확대">+</button>
+                    </div>
+                    <span class="sheet-status" id="sheetStatus">로컬 저장 준비됨</span>
+                </div>
+            </div>
+
+            <div class="sheet-control-strip">
+                <label>년도 <select id="sheetYearSelect"></select></label>
+                <label>월 <select id="sheetMonthSelect"></select></label>
+            </div>
+
+            <div class="formula-bar">
+                <span class="active-cell-label" id="activeCellLabel">A1</span>
+                <input class="formula-input" id="formulaInput" type="text" autocomplete="off" spellcheck="false" placeholder="셀 값 또는 =SUM(B1:B10)">
+            </div>
+
+            <div class="sheet-wrap">
+                <table class="weekly-table" id="weeklyRankTable" aria-label="6월 주차별 랭킹 입력표">
+                    <colgroup id="weeklyColGroup"></colgroup>
+                    <thead>
+                        <tr id="weeklyHeaderColumn">
+                            <th class="rank-head" rowspan="4" scope="col">#</th>
+                        </tr>
+                        <tr id="weeklyHeaderWeek"></tr>
+                        <tr id="weeklyHeaderEvent"></tr>
+                        <tr id="weeklyHeaderField"></tr>
+                    </thead>
+                    <tbody id="weeklyRankBody"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
-        let events = ['명함 이벤트', '준비전'];
-        let rankingsData = {
-            '명함 이벤트': [
-                { rank: 1, nickname: '[InX]Frostnight', score: '188,929,277' },
-                { rank: 2, nickname: '인소전트', score: '140,768,728' },
-                { rank: 3, nickname: '[TPE]Akira愛', score: '109,809,083' },
-                { rank: 4, nickname: '[EXO]로이⁹ROY', score: '109,552,265' },
-                { rank: 5, nickname: '[EXO]童麓 II', score: '109,225,997' },
-                { rank: 6, nickname: '[UNT]Moodeng', score: '95,908,384' },
-                { rank: 7, nickname: '[TPE]M.iMε.ω', score: '84,572,237' },
-                { rank: 8, nickname: '[TPE]Twinkle Twinkle', score: '81,664,382' }
-            ],
-            '준비전': [
-                { rank: 1, nickname: '[UNT]Absalom', score: '169,403,299' },
-                { rank: 2, nickname: '[InX]AmericanoOnBuffs', score: '140,147,730' },
-                { rank: 3, nickname: '[EXO]Ladypixel\'ᵋ~exo', score: '136,684,470' },
-                { rank: 4, nickname: '[UNT]INSURGENT ROAMER', score: '126,801,965' },
-                { rank: 5, nickname: '[EXO]Umer', score: '123,708,182' }
-            ]
-        };
-        let activeEvent = '명함 이벤트';
+        const STORAGE_KEY = 'wos2929_unt_rankings_spreadsheet_v3';
+        const LEGACY_STORAGE_KEY = 'wos2929_unt_rankings_june_2026_local';
+        const DEFAULT_YEAR = 2026;
+        const YEARS = Array.from({ length: 7 }, (_, index) => DEFAULT_YEAR - 2 + index);
+        const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
+        const EVENTS = ['명함 이벤트', '준비전'];
+        const EVENT_NONE = '없음';
+        const SHEET_EVENTS = [...EVENTS, EVENT_NONE];
+        const WEEK_COUNT = 5;
+        const DEFAULT_ROW_COUNT = 100;
+        const HISTORY_LIMIT = 50;
+        const FORMULA_NAMES = ['SUM', 'AVERAGE', 'IF', 'MIN', 'MAX', 'COUNT', 'ROUND'];
+        const DEFAULT_VIEW_WEEKS = { '명함 이벤트': 1, '준비전': 3 };
+        let saveTimer = null;
+        let appState = loadAppState();
+        let activeCell = { row: 0, col: 0 };
+        let selectedRange = { startRow: 0, startCol: 0, endRow: 0, endCol: 0 };
+        let undoStack = [];
+        let redoStack = [];
+        let isRestoringHistory = false;
+        let sheetZoom = 100;
 
-        function showEvent(eventName, sourceButton) {
-            activeEvent = eventName;
+        function showEvent(eventId, sourceButton) {
             document.querySelectorAll('.event-section').forEach(section => {
                 section.classList.remove('active');
             });
+
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
-            const section = document.getElementById(`event-${eventName}`);
+
+            const section = document.getElementById(eventId);
+            const button = sourceButton || document.querySelector(`[data-event-target="${eventId}"]`);
+
             if (section) section.classList.add('active');
-            if (sourceButton) sourceButton.classList.add('active');
+            if (button) button.classList.add('active');
         }
 
-        function openAddEventModal() {
-            document.getElementById('addEventModal').classList.add('show');
-            document.getElementById('newEventName').value = '';
-            document.getElementById('newEventName').focus();
+        function getStatusText() {
+            return document.getElementById('sheetStatus');
         }
 
-        function closeAddEventModal() {
-            document.getElementById('addEventModal').classList.remove('show');
+        function serializeHistory() {
+            return JSON.stringify(appState);
         }
 
-        function addNewEvent() {
-            const eventName = document.getElementById('newEventName').value.trim();
+        function updateHistoryButtons() {
+            const undoButton = document.getElementById('undoSheetBtn');
+            const redoButton = document.getElementById('redoSheetBtn');
+            if (undoButton) undoButton.disabled = undoStack.length === 0;
+            if (redoButton) redoButton.disabled = redoStack.length === 0;
+        }
 
-            if (!eventName) {
-                alert('이벤트명을 입력해주세요');
-                return;
+        function recordHistory() {
+            if (isRestoringHistory) return;
+            const snapshot = serializeHistory();
+            if (undoStack[undoStack.length - 1] === snapshot) return;
+            undoStack.push(snapshot);
+            if (undoStack.length > HISTORY_LIMIT) undoStack.shift();
+            redoStack = [];
+            updateHistoryButtons();
+        }
+
+        function restoreHistorySnapshot(snapshot, statusText) {
+            try {
+                isRestoringHistory = true;
+                const parsed = JSON.parse(snapshot);
+                appState = {
+                    selectedYear: Number(parsed.selectedYear) || DEFAULT_YEAR,
+                    selectedMonth: Number(parsed.selectedMonth) || 6,
+                    months: parsed.months || {},
+                    selectedEvent: parsed.selectedEvent || EVENTS[0],
+                    viewWeeks: { ...DEFAULT_VIEW_WEEKS, ...(parsed.viewWeeks || {}) }
+                };
+                Object.keys(appState.months).forEach(key => {
+                    const month = monthFromSheetKey(key, appState.selectedMonth);
+                    appState.months[key] = normalizeSheet(appState.months[key], month);
+                });
+                activeCell = { row: 0, col: 0 };
+                selectedRange = { startRow: 0, startCol: 0, endRow: 0, endCol: 0 };
+                syncControlsFromState();
+                renderWeeklySheet();
+                renderRankViews();
+                saveSheetData({ silent: true });
+                setSheetStatus(statusText);
+            } finally {
+                isRestoringHistory = false;
+                updateHistoryButtons();
             }
-
-            if (events.includes(eventName)) {
-                alert('이미 존재하는 이벤트입니다');
-                return;
-            }
-
-            events.push(eventName);
-            rankingsData[eventName] = [];
-
-            localStorage.setItem('events', JSON.stringify(events));
-            localStorage.setItem('rankingsData', JSON.stringify(rankingsData));
-
-            renderEventTabs();
-            renderEventSections();
-            updateEventSelectOptions();
-            closeAddEventModal();
         }
 
-        function renderEventTabs() {
-            const container = document.getElementById('eventTabsContainer');
-            container.innerHTML = '';
+        function undoSheetChange() {
+            if (!undoStack.length) return;
+            const current = serializeHistory();
+            const previous = undoStack.pop();
+            redoStack.push(current);
+            restoreHistorySnapshot(previous, '실행취소(Undo) 완료');
+        }
 
-            events.forEach((eventName, index) => {
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.className = `tab-button ${eventName === activeEvent ? 'active' : ''}`;
-                button.textContent = eventName;
-                button.onclick = () => showEvent(eventName, button);
-                container.appendChild(button);
+        function redoSheetChange() {
+            if (!redoStack.length) return;
+            const current = serializeHistory();
+            const next = redoStack.pop();
+            undoStack.push(current);
+            restoreHistorySnapshot(next, '다시 실행(Redo) 완료');
+        }
+
+        function applySheetZoom() {
+            const table = document.getElementById('weeklyRankTable');
+            const slider = document.getElementById('zoomSlider');
+            const value = document.getElementById('zoomValue');
+            if (table) table.style.zoom = `${sheetZoom}%`;
+            if (slider) slider.value = String(sheetZoom);
+            if (value) value.textContent = `${sheetZoom}%`;
+        }
+
+        function setSheetZoom(value) {
+            const next = Math.max(70, Math.min(140, Number(value) || 100));
+            sheetZoom = Math.round(next / 5) * 5;
+            applySheetZoom();
+        }
+
+        function setSheetStatus(message) {
+            const status = getStatusText();
+            if (status) status.textContent = message;
+        }
+
+        function makeId(prefix) {
+            return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+        }
+
+        function columnName(index) {
+            let value = index + 1;
+            let name = '';
+            while (value > 0) {
+                const remainder = (value - 1) % 26;
+                name = String.fromCharCode(65 + remainder) + name;
+                value = Math.floor((value - 1) / 26);
+            }
+            return name;
+        }
+
+        function columnIndex(name) {
+            return String(name || '').toUpperCase().split('').reduce((sum, letter) => {
+                return sum * 26 + letter.charCodeAt(0) - 64;
+            }, 0) - 1;
+        }
+
+        function parseAddress(address) {
+            const match = String(address || '').toUpperCase().match(/^([A-Z]+)([1-9][0-9]*)$/);
+            if (!match) return null;
+            return { col: columnIndex(match[1]), row: Number(match[2]) - 1 };
+        }
+
+        function sheetKey(year, month) {
+            return `${Number(year) || DEFAULT_YEAR}-${Number(month) || 6}`;
+        }
+
+        function monthFromSheetKey(key, fallbackMonth = 6) {
+            const parts = String(key).split('-');
+            return Number(parts.length > 1 ? parts[1] : parts[0]) || fallbackMonth;
+        }
+
+        function yearFromSheetKey(key, fallbackYear = DEFAULT_YEAR) {
+            const parts = String(key).split('-');
+            return Number(parts.length > 1 ? parts[0] : fallbackYear) || fallbackYear;
+        }
+
+        function createDefaultColumns(month) {
+            const columns = [];
+            for (let week = 1; week <= WEEK_COUNT; week += 1) {
+                ['닉네임', '점수'].forEach(field => {
+                    columns.push({
+                        id: makeId('col'),
+                        month,
+                        week,
+                        eventName: EVENT_NONE,
+                        field,
+                        type: field === '점수' ? 'score' : 'text'
+                    });
+                });
+            }
+            return columns;
+        }
+
+        function makeEmptyRow(columnCount) {
+            return { id: makeId('row'), cells: Array.from({ length: columnCount }, () => '') };
+        }
+
+        function makeDefaultSheet(month) {
+            const columns = createDefaultColumns(month);
+            return {
+                month,
+                columns,
+                rows: Array.from({ length: DEFAULT_ROW_COUNT }, () => makeEmptyRow(columns.length))
+            };
+        }
+
+        function getWeekEvent(sheet, week) {
+            const column = sheet.columns.find(item => item.week === week && SHEET_EVENTS.includes(item.eventName));
+            return column ? column.eventName : EVENT_NONE;
+        }
+
+        function setWeekEvent(sheet, week, eventName) {
+            sheet.columns.forEach(column => {
+                if (column.week === week) {
+                    column.eventName = eventName;
+                }
             });
         }
 
-        function renderEventSections() {
-            const container = document.getElementById('eventSectionsContainer');
-            container.innerHTML = '';
-
-            events.forEach(eventName => {
-                const section = document.createElement('div');
-                section.id = `event-${eventName}`;
-                section.className = `event-section ${eventName === activeEvent ? 'active' : ''}`;
-                section.innerHTML = `
-                    <h2 class="event-title">${eventName}</h2>
-                    <div class="ranking-list" id="rankingList-${eventName}"></div>
-                `;
-                container.appendChild(section);
-            });
-
-            renderRankings();
+        function countFilledValues(sheet, columnIndexes) {
+            return sheet.rows.reduce((count, row) => {
+                return count + columnIndexes.reduce((sum, colIndex) => {
+                    return sum + (String(row.cells[colIndex] || '').trim() ? 1 : 0);
+                }, 0);
+            }, 0);
         }
 
-        function updateEventSelectOptions() {
-            const select = document.getElementById('eventSelect');
-            select.innerHTML = '';
-            events.forEach(eventName => {
+        function findWeekFieldColumn(sheet, week, eventName, field) {
+            return sheet.columns.findIndex(column => {
+                return column.week === week && column.eventName === eventName && column.field === field;
+            });
+        }
+
+        function findSimpleWeekFieldColumn(sheet, week, field) {
+            return sheet.columns.findIndex(column => {
+                return column.week === week && column.field === field;
+            });
+        }
+
+        function compressWeekEventColumns(sheet, month) {
+            const defaultSheet = makeDefaultSheet(month);
+            const nextRows = sheet.rows.map(row => ({
+                id: row.id || makeId('row'),
+                cells: Array.from({ length: defaultSheet.columns.length }, () => '')
+            }));
+
+            for (let week = 1; week <= WEEK_COUNT; week += 1) {
+                const eventScores = EVENTS.map(eventName => {
+                    const nicknameCol = findWeekFieldColumn(sheet, week, eventName, '닉네임');
+                    const scoreCol = findWeekFieldColumn(sheet, week, eventName, '점수');
+                    return {
+                        eventName,
+                        nicknameCol,
+                        scoreCol,
+                        filled: countFilledValues(sheet, [nicknameCol, scoreCol].filter(index => index >= 0))
+                    };
+                });
+                let selected = eventScores.sort((a, b) => b.filled - a.filled)[0];
+
+                if (!selected || selected.filled === 0) {
+                    const nicknameCol = findSimpleWeekFieldColumn(sheet, week, '닉네임');
+                    const scoreCol = findSimpleWeekFieldColumn(sheet, week, '점수');
+                    selected = {
+                        eventName: getWeekEvent(sheet, week),
+                        nicknameCol,
+                        scoreCol
+                    };
+                }
+
+                const selectedEventName = selected.filled ? selected.eventName : EVENT_NONE;
+                setWeekEvent(defaultSheet, week, selectedEventName || EVENT_NONE);
+                const targetNickname = (week - 1) * 2;
+                const targetScore = targetNickname + 1;
+                sheet.rows.forEach((row, rowIndex) => {
+                    if (!nextRows[rowIndex]) return;
+                    nextRows[rowIndex].cells[targetNickname] = selected.nicknameCol >= 0 ? row.cells[selected.nicknameCol] || '' : '';
+                    nextRows[rowIndex].cells[targetScore] = selected.scoreCol >= 0 ? row.cells[selected.scoreCol] || '' : '';
+                });
+            }
+
+            defaultSheet.rows = nextRows.length ? nextRows : defaultSheet.rows;
+            return defaultSheet;
+        }
+
+        function normalizeSheet(sheet, month) {
+            const next = sheet && Array.isArray(sheet.columns) && Array.isArray(sheet.rows) ? sheet : makeDefaultSheet(month);
+            if (!next.month) next.month = month;
+            const defaultColumnCount = WEEK_COUNT * 2;
+            const hasDuplicatedEvents = next.columns.filter(column => column.week).length > defaultColumnCount;
+            if (hasDuplicatedEvents) {
+                return normalizeSheet(compressWeekEventColumns(next, month), month);
+            }
+            next.columns.forEach((column, index) => {
+                column.id = column.id || makeId('col');
+                column.field = column.field || `열 ${columnName(index)}`;
+                column.eventName = SHEET_EVENTS.includes(column.eventName) ? column.eventName : EVENT_NONE;
+                column.type = column.type || (column.field === '점수' ? 'score' : 'text');
+            });
+            for (let week = 1; week <= WEEK_COUNT; week += 1) {
+                const weekEvent = getWeekEvent(next, week);
+                setWeekEvent(next, week, weekEvent);
+            }
+            next.rows.forEach(row => {
+                row.id = row.id || makeId('row');
+                row.cells = Array.isArray(row.cells) ? row.cells : [];
+                while (row.cells.length < next.columns.length) row.cells.push('');
+                if (row.cells.length > next.columns.length) row.cells.length = next.columns.length;
+            });
+            return next;
+        }
+
+        function migrateLegacySheet() {
+            try {
+                const raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+                if (!raw) return null;
+                const legacy = JSON.parse(raw);
+                if (!legacy || !legacy.rows) return null;
+                const sheet = makeDefaultSheet(6);
+                for (let week = 1; week <= WEEK_COUNT; week += 1) {
+                    const weekKey = `6월 ${week}주차`;
+                    const weekRows = legacy.rows[weekKey] || [];
+                    const hasWeekData = weekRows.some(row => String(row.nickname || row.score || '').trim());
+                    if (hasWeekData) setWeekEvent(sheet, week, EVENTS[0]);
+                    const nicknameCol = (week - 1) * 2;
+                    const scoreCol = nicknameCol + 1;
+                    weekRows.forEach((row, rowIndex) => {
+                        if (!sheet.rows[rowIndex]) return;
+                        sheet.rows[rowIndex].cells[nicknameCol] = row.nickname || '';
+                        sheet.rows[rowIndex].cells[scoreCol] = row.score || '';
+                    });
+                }
+                return sheet;
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function loadAppState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    const selectedYear = Number(parsed.selectedYear) || DEFAULT_YEAR;
+                    const selectedMonth = Number(parsed.selectedMonth) || 6;
+                    const sourceMonths = parsed.months || {};
+                    const months = {};
+                    Object.keys(sourceMonths).forEach(key => {
+                        const year = yearFromSheetKey(key, selectedYear);
+                        const month = monthFromSheetKey(key, selectedMonth);
+                        months[sheetKey(year, month)] = normalizeSheet(sourceMonths[key], month);
+                    });
+                    return {
+                        selectedYear,
+                        selectedMonth,
+                        months,
+                        selectedEvent: parsed.selectedEvent || EVENTS[0],
+                        viewWeeks: { ...DEFAULT_VIEW_WEEKS, ...(parsed.viewWeeks || {}) }
+                    };
+                }
+            } catch (error) {
+                setSheetStatus('로컬 저장 읽기 실패');
+            }
+
+            const migrated = migrateLegacySheet();
+            const initialSheet = migrated || makeDefaultSheet(6);
+            return {
+                selectedYear: DEFAULT_YEAR,
+                selectedMonth: 6,
+                selectedEvent: EVENTS[0],
+                viewWeeks: { ...DEFAULT_VIEW_WEEKS },
+                months: { [sheetKey(DEFAULT_YEAR, 6)]: initialSheet }
+            };
+        }
+
+        function currentSheet() {
+            const key = sheetKey(appState.selectedYear, appState.selectedMonth);
+            if (!appState.months[key]) {
+                appState.months[key] = makeDefaultSheet(appState.selectedMonth);
+            }
+            appState.months[key] = normalizeSheet(appState.months[key], appState.selectedMonth);
+            return appState.months[key];
+        }
+
+        function updateSharedMonth(month, options = {}) {
+            updateSharedDate(appState.selectedYear, month, options);
+        }
+
+        function updateSharedYear(year, options = {}) {
+            updateSharedDate(year, appState.selectedMonth, options);
+        }
+
+        function updateSharedDate(year, month, options = {}) {
+            appState.selectedYear = Number(year) || appState.selectedYear || DEFAULT_YEAR;
+            appState.selectedMonth = Number(month) || appState.selectedMonth;
+            document.querySelectorAll('.view-year-select').forEach(select => {
+                select.value = String(appState.selectedYear);
+            });
+            document.querySelectorAll('.view-month-select').forEach(select => {
+                select.value = String(appState.selectedMonth);
+            });
+            const sheetYearSelect = document.getElementById('sheetYearSelect');
+            if (sheetYearSelect) sheetYearSelect.value = String(appState.selectedYear);
+            const sheetMonthSelect = document.getElementById('sheetMonthSelect');
+            if (sheetMonthSelect) sheetMonthSelect.value = String(appState.selectedMonth);
+            if (options.resetActiveCell) {
+                activeCell = { row: 0, col: 0 };
+                selectedRange = { startRow: 0, startCol: 0, endRow: 0, endCol: 0 };
+            }
+        }
+
+        function applyDefaultViewWeeksToCurrentSheet() {
+            const sheet = currentSheet();
+            const viewWeeks = { ...DEFAULT_VIEW_WEEKS, ...(appState.viewWeeks || {}) };
+            Object.entries(viewWeeks).forEach(([eventName, week]) => {
+                if (EVENTS.includes(eventName)) {
+                    setWeekEvent(sheet, Number(week), eventName);
+                }
+            });
+        }
+
+        function updateStaticTitles() {
+            document.querySelectorAll('.rank-view-controls').forEach(control => {
+                const yearSelect = control.querySelector('.view-year-select');
+                const monthSelect = control.querySelector('.view-month-select');
+                const weekSelect = control.querySelector('.view-week-select');
+                const titleId = monthSelect?.dataset.titleTarget || weekSelect?.dataset.titleTarget;
+                const eventName = monthSelect?.dataset.eventName || weekSelect?.dataset.eventName || '';
+                const title = titleId ? document.getElementById(titleId) : null;
+                if (title && yearSelect && monthSelect && weekSelect) {
+                    title.textContent = weekSelect.disabled ? `${yearSelect.value}년 ${monthSelect.value}월 ${eventName} 없음` : `${yearSelect.value}년 ${monthSelect.value}월 ${weekSelect.value}주차 ${eventName}`;
+                }
+            });
+        }
+
+        function syncWeekToEvent(eventName, week, options = {}) {
+            const nextWeek = Math.max(1, Math.min(WEEK_COUNT, Number(week) || 1));
+            appState.viewWeeks = { ...DEFAULT_VIEW_WEEKS, ...(appState.viewWeeks || {}), [eventName]: nextWeek };
+            document.querySelectorAll(`.view-week-select[data-event-name="${eventName}"]`).forEach(select => {
+                select.value = String(nextWeek);
+            });
+            updateStaticTitles();
+            renderRankViews();
+            if (!options.skipRender) renderWeeklySheet();
+            if (!options.skipSave) saveSheetData({ silent: true });
+        }
+
+        function getSelectableWeeksForEvent(eventName) {
+            const sheet = currentSheet();
+            const weeks = [];
+            for (let week = 1; week <= WEEK_COUNT; week += 1) {
+                if (getWeekEvent(sheet, week) === eventName) weeks.push(week);
+            }
+            return weeks;
+        }
+
+        function populateWeekSelectForEvent(select, eventName) {
+            const selectableWeeks = getSelectableWeeksForEvent(eventName);
+            const previous = Number((appState.viewWeeks && appState.viewWeeks[eventName]) || select.value || select.dataset.defaultWeek || 1);
+            select.textContent = '';
+
+            if (!selectableWeeks.length) {
                 const option = document.createElement('option');
-                option.value = eventName;
-                option.textContent = eventName;
+                option.value = '';
+                option.textContent = '선택 없음';
+                option.selected = true;
+                select.appendChild(option);
+                select.disabled = true;
+                return null;
+            }
+
+            select.disabled = false;
+            const selectedWeek = selectableWeeks.includes(previous) ? previous : selectableWeeks[0];
+            selectableWeeks.forEach(week => {
+                const option = document.createElement('option');
+                option.value = String(week);
+                option.textContent = `${week}주차`;
+                option.selected = week === selectedWeek;
+                select.appendChild(option);
+            });
+            appState.viewWeeks = { ...DEFAULT_VIEW_WEEKS, ...(appState.viewWeeks || {}), [eventName]: selectedWeek };
+            return selectedWeek;
+        }
+
+        function syncControlsFromState() {
+            updateSharedMonth(appState.selectedMonth);
+            document.querySelectorAll('.view-week-select').forEach(select => {
+                const eventName = select.dataset.eventName;
+                populateWeekSelectForEvent(select, eventName);
+            });
+            updateStaticTitles();
+            renderRankViews();
+        }
+
+        function ensureSheetSize(rowCount, columnCount) {
+            const sheet = currentSheet();
+            while (sheet.columns.length < columnCount) {
+                sheet.columns.push({
+                    id: makeId('col'),
+                    month: appState.selectedMonth,
+                    week: null,
+                    eventName: EVENT_NONE,
+                    field: `추가열 ${sheet.columns.length + 1}`,
+                    type: 'text',
+                    custom: true
+                });
+            }
+            while (sheet.rows.length < rowCount) {
+                sheet.rows.push(makeEmptyRow(sheet.columns.length));
+            }
+            sheet.rows.forEach(row => {
+                while (row.cells.length < sheet.columns.length) row.cells.push('');
+            });
+        }
+
+        function isFormula(value) {
+            return String(value || '').trim().startsWith('=');
+        }
+
+        function normalizeCellInput(value) {
+            return String(value || '').replace(/\u00a0/g, ' ').replace(/\r?\n/g, ' ').trim();
+        }
+
+        function parseNumberValue(value) {
+            if (typeof value === 'number') return value;
+            const normalized = String(value ?? '').replace(/,/g, '').trim();
+            if (!normalized) return NaN;
+            return /^-?\d+(\.\d+)?$/.test(normalized) ? Number(normalized) : NaN;
+        }
+
+        function formatNumber(value) {
+            if (value === '' || value === null || value === undefined) return '';
+            const number = parseNumberValue(value);
+            if (!Number.isFinite(number)) return String(value);
+            return number.toLocaleString('ko-KR', { maximumFractionDigits: 6 });
+        }
+
+        function formatScoreRaw(value) {
+            const raw = normalizeCellInput(value);
+            if (!raw || isFormula(raw)) return raw;
+            return formatNumber(raw);
+        }
+
+        function coerceFormulaNumber(value) {
+            if (Array.isArray(value)) return value.flat(Infinity).map(coerceFormulaNumber);
+            const number = parseNumberValue(value);
+            return Number.isFinite(number) ? number : 0;
+        }
+
+        function flattenValues(values) {
+            return values.flat(Infinity);
+        }
+
+        function getCellRaw(row, col) {
+            const sheet = currentSheet();
+            return sheet.rows[row] && sheet.rows[row].cells[col] !== undefined ? sheet.rows[row].cells[col] : '';
+        }
+
+        function isNoneColumn(column) {
+            return Boolean(column && column.week && getWeekEvent(currentSheet(), column.week) === EVENT_NONE);
+        }
+
+        function setCellRaw(row, col, value, options = {}) {
+            ensureSheetSize(row + 1, col + 1);
+            const sheet = currentSheet();
+            const column = sheet.columns[col] || {};
+            if (isNoneColumn(column) && !options.force) return;
+            let nextValue = normalizeCellInput(value);
+            if (options.formatScore && column.type === 'score') {
+                nextValue = formatScoreRaw(nextValue);
+            }
+            if ((sheet.rows[row].cells[col] || '') === nextValue) return;
+            if (!options.skipHistory) recordHistory();
+            sheet.rows[row].cells[col] = nextValue;
+            const cell = getCellElement(row, col);
+            if (cell && options.dirty !== false) {
+                cell.classList.add('dirty');
+            }
+        }
+
+        function getCellValue(row, col, visited = new Set()) {
+            const sheet = currentSheet();
+            if (!sheet.rows[row] || !sheet.columns[col]) return '';
+            if (isNoneColumn(sheet.columns[col])) return '';
+            const raw = getCellRaw(row, col);
+            if (!isFormula(raw)) {
+                const number = parseNumberValue(raw);
+                return Number.isFinite(number) ? number : raw;
+            }
+
+            const key = `${row}:${col}`;
+            if (visited.has(key)) return '#CYCLE';
+            const nextVisited = new Set(visited);
+            nextVisited.add(key);
+            return evaluateFormula(raw, nextVisited);
+        }
+
+        function getRangeValues(startAddress, endAddress, visited) {
+            const start = parseAddress(startAddress);
+            const end = parseAddress(endAddress);
+            if (!start || !end) return [];
+            const rowStart = Math.min(start.row, end.row);
+            const rowEnd = Math.max(start.row, end.row);
+            const colStart = Math.min(start.col, end.col);
+            const colEnd = Math.max(start.col, end.col);
+            const values = [];
+            for (let row = rowStart; row <= rowEnd; row += 1) {
+                const rowValues = [];
+                for (let col = colStart; col <= colEnd; col += 1) {
+                    rowValues.push(getCellValue(row, col, visited));
+                }
+                values.push(rowValues);
+            }
+            return values;
+        }
+
+        function normalizeFormulaExpression(raw) {
+            let expression = String(raw || '').trim().replace(/^=/, '');
+            const ranges = [];
+            const cells = [];
+
+            expression = expression.replace(/\b([A-Z]+[1-9][0-9]*)\s*:\s*([A-Z]+[1-9][0-9]*)\b/gi, (_, start, end) => {
+                const index = ranges.push([start.toUpperCase(), end.toUpperCase()]) - 1;
+                return `__RANGE${index}__`;
+            });
+
+            expression = expression.replace(/\b([A-Z]+[1-9][0-9]*)\b/gi, (_, address) => {
+                const index = cells.push(address.toUpperCase()) - 1;
+                return `__CELL${index}__`;
+            });
+
+            FORMULA_NAMES.forEach(name => {
+                expression = expression.replace(new RegExp(`\\b${name}\\s*\\(`, 'gi'), `${name}(`);
+            });
+
+            expression = expression
+                .replace(/<>/g, '!=')
+                .replace(/(^|[^<>=!])=([^=])/g, '$1==$2')
+                .replace(/\^/g, '**')
+                .replace(/&/g, '+');
+
+            expression = expression.replace(/__RANGE(\d+)__/g, (_, index) => {
+                const range = ranges[Number(index)];
+                return `RANGE("${range[0]}","${range[1]}")`;
+            });
+
+            expression = expression.replace(/__CELL(\d+)__/g, (_, index) => {
+                return `CELL("${cells[Number(index)]}")`;
+            });
+
+            return expression;
+        }
+
+        function evaluateFormula(raw, visited) {
+            const SUM = (...values) => flattenValues(values).reduce((sum, value) => sum + coerceFormulaNumber(value), 0);
+            const AVERAGE = (...values) => {
+                const numbers = flattenValues(values).map(coerceFormulaNumber).filter(value => Number.isFinite(value));
+                return numbers.length ? numbers.reduce((sum, value) => sum + value, 0) / numbers.length : 0;
+            };
+            const MIN = (...values) => Math.min(...flattenValues(values).map(coerceFormulaNumber));
+            const MAX = (...values) => Math.max(...flattenValues(values).map(coerceFormulaNumber));
+            const COUNT = (...values) => flattenValues(values).filter(value => Number.isFinite(parseNumberValue(value))).length;
+            const ROUND = (value, digits = 0) => {
+                const factor = 10 ** Number(digits || 0);
+                return Math.round(coerceFormulaNumber(value) * factor) / factor;
+            };
+            const IF = (condition, truthy, falsy) => condition ? truthy : falsy;
+            const CELL = address => {
+                const parsed = parseAddress(address);
+                if (!parsed) return '#REF!';
+                return getCellValue(parsed.row, parsed.col, visited);
+            };
+            const RANGE = (start, end) => getRangeValues(start, end, visited);
+
+            try {
+                const expression = normalizeFormulaExpression(raw);
+                const result = Function('SUM', 'AVERAGE', 'IF', 'MIN', 'MAX', 'COUNT', 'ROUND', 'CELL', 'RANGE', `"use strict"; return (${expression});`)(SUM, AVERAGE, IF, MIN, MAX, COUNT, ROUND, CELL, RANGE);
+                if (result === Infinity || result === -Infinity || Number.isNaN(result)) return '#NUM!';
+                return result;
+            } catch (error) {
+                return '#ERROR';
+            }
+        }
+
+        function getCellDisplay(row, col) {
+            const sheet = currentSheet();
+            const raw = getCellRaw(row, col);
+            const column = sheet.columns[col] || {};
+            if (isNoneColumn(column)) return '';
+            if (isFormula(raw)) {
+                const result = getCellValue(row, col);
+                if (typeof result === 'string' && result.startsWith('#')) return result;
+                return typeof result === 'number' ? formatNumber(result) : String(result ?? '');
+            }
+            if (column.type === 'score') return formatScoreRaw(raw);
+            return raw;
+        }
+
+        function getCellElement(row, col) {
+            return document.querySelector(`.sheet-cell[data-row="${row}"][data-col="${col}"]`);
+        }
+
+        function updateFormulaBar() {
+            const label = document.getElementById('activeCellLabel');
+            const input = document.getElementById('formulaInput');
+            if (!label || !input) return;
+            label.textContent = `${columnName(activeCell.col)}${activeCell.row + 1}`;
+            if (document.activeElement !== input) {
+                input.value = getCellRaw(activeCell.row, activeCell.col);
+            }
+        }
+
+        function normalizedSelectedRange() {
+            return {
+                rowStart: Math.min(selectedRange.startRow, selectedRange.endRow),
+                rowEnd: Math.max(selectedRange.startRow, selectedRange.endRow),
+                colStart: Math.min(selectedRange.startCol, selectedRange.endCol),
+                colEnd: Math.max(selectedRange.startCol, selectedRange.endCol)
+            };
+        }
+
+        function updateSelectionClasses() {
+            document.querySelectorAll('.sheet-cell.selected').forEach(cell => {
+                cell.classList.remove('selected');
+            });
+
+            const range = normalizedSelectedRange();
+            for (let row = range.rowStart; row <= range.rowEnd; row += 1) {
+                for (let col = range.colStart; col <= range.colEnd; col += 1) {
+                    const cell = getCellElement(row, col);
+                    if (cell) cell.classList.add('selected');
+                }
+            }
+        }
+
+        function setActiveCell(row, col, extendSelection = false) {
+            const sheet = currentSheet();
+            activeCell = {
+                row: Math.max(0, Math.min(row, sheet.rows.length - 1)),
+                col: Math.max(0, Math.min(col, sheet.columns.length - 1))
+            };
+
+            if (extendSelection) {
+                selectedRange.endRow = activeCell.row;
+                selectedRange.endCol = activeCell.col;
+            } else {
+                selectedRange = {
+                    startRow: activeCell.row,
+                    startCol: activeCell.col,
+                    endRow: activeCell.row,
+                    endCol: activeCell.col
+                };
+            }
+
+            updateSelectionClasses();
+            updateFormulaBar();
+        }
+
+        function updateCellDisplays() {
+            document.querySelectorAll('.sheet-cell').forEach(cell => {
+                const row = Number(cell.dataset.row);
+                const col = Number(cell.dataset.col);
+                const sheet = currentSheet();
+                const column = sheet.columns[col] || {};
+                const raw = getCellRaw(row, col);
+                const display = getCellDisplay(row, col);
+                const isFocused = document.activeElement === cell;
+                const readonly = isNoneColumn(column);
+                cell.dataset.raw = raw;
+                cell.dataset.value = display;
+                cell.classList.toggle('formula', isFormula(raw));
+                cell.classList.toggle('error', String(display).startsWith('#'));
+                cell.classList.toggle('readonly', readonly);
+                cell.contentEditable = readonly ? 'false' : 'true';
+                if (!isFocused) {
+                    cell.textContent = display;
+                }
+                cell.title = raw && raw !== display ? `${raw} = ${display}` : raw;
+            });
+            updateSelectionClasses();
+            updateFormulaBar();
+        }
+
+        function groupConsecutiveColumns(columns, keyGetter, labelGetter) {
+            const groups = [];
+            columns.forEach((column, index) => {
+                const key = keyGetter(column, index);
+                const label = labelGetter(column, index);
+                const last = groups[groups.length - 1];
+                if (last && last.key === key) {
+                    last.colSpan += 1;
+                } else {
+                    groups.push({ key, label, colSpan: 1 });
+                }
+            });
+            return groups;
+        }
+
+        function appendGroupedHeaders(row, groups, className) {
+            groups.forEach(group => {
+                const th = document.createElement('th');
+                th.className = className;
+                th.scope = 'col';
+                th.colSpan = group.colSpan;
+                th.textContent = group.label;
+                row.appendChild(th);
+            });
+        }
+
+        function renderWeeklySheet() {
+            const sheet = currentSheet();
+            const columnRow = document.getElementById('weeklyHeaderColumn');
+            const weekRow = document.getElementById('weeklyHeaderWeek');
+            const eventRow = document.getElementById('weeklyHeaderEvent');
+            const fieldRow = document.getElementById('weeklyHeaderField');
+            const body = document.getElementById('weeklyRankBody');
+            const colGroup = document.getElementById('weeklyColGroup');
+            const table = document.getElementById('weeklyRankTable');
+            const title = document.getElementById('sheetTitle');
+
+            if (!columnRow || !weekRow || !eventRow || !fieldRow || !body) return;
+
+            if (title) title.textContent = `${appState.selectedYear}년 ${appState.selectedMonth}월 주차별 랭킹 입력`;
+            if (colGroup) colGroup.textContent = '';
+            columnRow.textContent = '';
+            weekRow.textContent = '';
+            eventRow.textContent = '';
+            fieldRow.textContent = '';
+            body.textContent = '';
+
+            let tableWidth = 54;
+            if (colGroup) {
+                const rankCol = document.createElement('col');
+                rankCol.className = 'rank-col';
+                rankCol.style.width = '54px';
+                colGroup.appendChild(rankCol);
+                sheet.columns.forEach(column => {
+                    const col = document.createElement('col');
+                    const colWidth = isNoneColumn(column) ? 56 : (column.type === 'score' ? 126 : 205);
+                    col.className = isNoneColumn(column) ? 'week-none-col' : (column.type === 'score' ? 'score-col' : 'nickname-col');
+                    col.style.width = `${colWidth}px`;
+                    tableWidth += colWidth;
+                    colGroup.appendChild(col);
+                });
+            }
+            if (table) table.style.width = `${tableWidth}px`;
+
+            const rankHead = document.createElement('th');
+            rankHead.className = 'rank-head';
+            rankHead.rowSpan = 4;
+            rankHead.scope = 'col';
+            rankHead.textContent = '#';
+            columnRow.appendChild(rankHead);
+
+            sheet.columns.forEach((column, index) => {
+                const th = document.createElement('th');
+                th.className = `column-head ${column.type === 'score' ? 'score-col' : 'nickname-col'} ${isNoneColumn(column) ? 'week-none-col none-week' : ''}`;
+                th.scope = 'col';
+                const letter = document.createElement('span');
+                letter.className = 'column-letter';
+                letter.textContent = columnName(index);
+                th.appendChild(letter);
+                columnRow.appendChild(th);
+            });
+
+            const weekGroups = groupConsecutiveColumns(
+                sheet.columns,
+                column => column.week ? `${appState.selectedYear}-${column.month || appState.selectedMonth}-${column.week}` : `custom-${column.id}`,
+                column => column.week ? `${appState.selectedMonth}월 ${column.week}주차` : '추가 열'
+            );
+            appendGroupedHeaders(weekRow, weekGroups, 'week-name');
+            Array.from(weekRow.querySelectorAll('.week-name')).forEach((th, index) => {
+                const week = index + 1;
+                if (getWeekEvent(sheet, week) === EVENT_NONE) th.classList.add('none-week');
+            });
+
+            weekGroups.forEach(group => {
+                const th = document.createElement('th');
+                th.className = 'event-name';
+                th.scope = 'col';
+                th.colSpan = group.colSpan;
+                const weekMatch = String(group.key).match(/-(\d+)$/);
+                const week = weekMatch ? Number(weekMatch[1]) : null;
+
+                if (week) {
+                    const label = document.createElement('label');
+                    label.className = 'week-event-label';
+                    const text = document.createElement('span');
+                    text.textContent = '이벤트';
+                    const select = document.createElement('select');
+                    select.className = 'week-event-select';
+                    select.dataset.week = String(week);
+                    populateSelect(select, SHEET_EVENTS, getWeekEvent(sheet, week));
+                    select.classList.toggle('none-selected', select.value === EVENT_NONE);
+                    label.appendChild(text);
+                    label.appendChild(select);
+                    th.appendChild(label);
+                    if (select.value === EVENT_NONE) th.classList.add('none-week');
+                } else {
+                    th.textContent = '직접 입력';
+                }
+
+                eventRow.appendChild(th);
+            });
+
+            sheet.columns.forEach((column, index) => {
+                const th = document.createElement('th');
+                th.className = `column-label ${column.type === 'score' ? 'score-col' : 'nickname-col'} ${isNoneColumn(column) ? 'week-none-col none-week' : ''}`;
+                th.scope = 'col';
+                th.textContent = column.field || `열 ${columnName(index)}`;
+                fieldRow.appendChild(th);
+            });
+
+            sheet.rows.forEach((rowData, rowIndex) => {
+                const tr = document.createElement('tr');
+                const rankCell = document.createElement('th');
+                rankCell.className = 'rank-cell';
+                rankCell.scope = 'row';
+                rankCell.textContent = String(rowIndex + 1);
+                tr.appendChild(rankCell);
+
+                sheet.columns.forEach((column, colIndex) => {
+                    const td = document.createElement('td');
+                    if (isNoneColumn(column)) td.className = 'week-none-col none-week';
+                    const cell = document.createElement('div');
+                    cell.className = `sheet-cell ${column.type === 'score' ? 'score' : 'text'}`;
+                    cell.contentEditable = 'true';
+                    cell.spellcheck = false;
+                    cell.dataset.row = String(rowIndex);
+                    cell.dataset.col = String(colIndex);
+                    cell.dataset.address = `${columnName(colIndex)}${rowIndex + 1}`;
+                    td.appendChild(cell);
+                    tr.appendChild(td);
+                });
+
+                body.appendChild(tr);
+            });
+
+            updateCellDisplays();
+            setActiveCell(activeCell.row, activeCell.col);
+            applySheetZoom();
+            setSheetStatus('로컬 저장 준비됨');
+        }
+
+        function saveSheetData(options = {}) {
+            appState.updatedAt = new Date().toISOString();
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                document.querySelectorAll('.sheet-cell.dirty').forEach(cell => {
+                    cell.classList.remove('dirty');
+                });
+                if (!options.silent) {
+                    setSheetStatus(`로컬 저장됨 ${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}`);
+                }
+            } catch (error) {
+                setSheetStatus('로컬 저장 실패');
+            }
+        }
+
+        function scheduleSave(cell) {
+            if (cell) cell.classList.add('dirty');
+            setSheetStatus('변경 저장 대기중');
+            window.clearTimeout(saveTimer);
+            saveTimer = window.setTimeout(() => saveSheetData(), 450);
+        }
+
+        function finalizeCell(cell) {
+            if (!cell) return;
+            const row = Number(cell.dataset.row);
+            const col = Number(cell.dataset.col);
+            if (isNoneColumn(currentSheet().columns[col])) return;
+            setCellRaw(row, col, cell.textContent, { dirty: true, formatScore: true });
+            cell.textContent = getCellDisplay(row, col);
+            updateCellDisplays();
+            renderRankViews();
+            scheduleSave(cell);
+        }
+
+        function focusCell(row, col) {
+            const cell = getCellElement(row, col);
+            if (!cell) return;
+            setActiveCell(row, col);
+            cell.focus();
+        }
+
+        function moveFocus(direction) {
+            const sheet = currentSheet();
+            let { row, col } = activeCell;
+            if (direction === 'next') col += 1;
+            if (direction === 'previous') col -= 1;
+            if (direction === 'down') row += 1;
+            if (direction === 'up') row -= 1;
+
+            if (col >= sheet.columns.length) {
+                col = 0;
+                row += 1;
+            }
+            if (col < 0) {
+                col = sheet.columns.length - 1;
+                row -= 1;
+            }
+            row = Math.max(0, Math.min(row, sheet.rows.length - 1));
+            col = Math.max(0, Math.min(col, sheet.columns.length - 1));
+            focusCell(row, col);
+        }
+
+        function splitClipboardText(text) {
+            const rows = String(text || '').replace(/\r/g, '').split('\n');
+            if (rows[rows.length - 1] === '') rows.pop();
+            return rows.map(row => row.split('\t'));
+        }
+
+        function pasteGrid(text, startRow, startCol) {
+            const grid = splitClipboardText(text);
+            if (!grid.length) return;
+            const rowCount = grid.length;
+            const colCount = Math.max(...grid.map(row => row.length));
+            recordHistory();
+            ensureSheetSize(startRow + rowCount, startCol + colCount);
+            grid.forEach((rowValues, rowOffset) => {
+                rowValues.forEach((value, colOffset) => {
+                    setCellRaw(startRow + rowOffset, startCol + colOffset, value, { dirty: true, formatScore: true, skipHistory: true });
+                });
+            });
+            activeCell = { row: startRow, col: startCol };
+            selectedRange = {
+                startRow,
+                startCol,
+                endRow: startRow + rowCount - 1,
+                endCol: startCol + colCount - 1
+            };
+            renderWeeklySheet();
+            renderRankViews();
+            scheduleSave();
+        }
+
+        function buildSelectedText(useDisplay = true) {
+            const range = normalizedSelectedRange();
+            const lines = [];
+            for (let row = range.rowStart; row <= range.rowEnd; row += 1) {
+                const values = [];
+                for (let col = range.colStart; col <= range.colEnd; col += 1) {
+                    values.push(useDisplay ? getCellDisplay(row, col) : getCellRaw(row, col));
+                }
+                lines.push(values.join('\t'));
+            }
+            return lines.join('\n');
+        }
+
+        function copySelectedCells() {
+            const text = buildSelectedText(true);
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => setSheetStatus('선택 영역 복사됨')).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            textarea.remove();
+            setSheetStatus('선택 영역 복사됨');
+        }
+
+        function addRow() {
+            const sheet = currentSheet();
+            const range = normalizedSelectedRange();
+            const insertAt = range.rowEnd + 1;
+            recordHistory();
+            sheet.rows.splice(insertAt, 0, makeEmptyRow(sheet.columns.length));
+            activeCell = { row: insertAt, col: 0 };
+            renderWeeklySheet();
+            renderRankViews();
+            scheduleSave();
+        }
+
+        function deleteRow() {
+            const sheet = currentSheet();
+            if (sheet.rows.length <= 1) return;
+            const range = normalizedSelectedRange();
+            const deleteCount = Math.min(range.rowEnd - range.rowStart + 1, sheet.rows.length - 1);
+            recordHistory();
+            sheet.rows.splice(range.rowStart, deleteCount);
+            activeCell = { row: Math.min(range.rowStart, sheet.rows.length - 1), col: activeCell.col };
+            renderWeeklySheet();
+            renderRankViews();
+            scheduleSave();
+        }
+
+        function addColumn() {
+            const sheet = currentSheet();
+            const range = normalizedSelectedRange();
+            const insertAt = range.colEnd + 1;
+            sheet.columns.splice(insertAt, 0, {
+                id: makeId('col'),
+                month: appState.selectedMonth,
+                week: null,
+                eventName: EVENT_NONE,
+                field: `추가열 ${insertAt + 1}`,
+                type: 'text',
+                custom: true
+            });
+            sheet.rows.forEach(row => row.cells.splice(insertAt, 0, ''));
+            activeCell = { row: 0, col: insertAt };
+            renderWeeklySheet();
+            renderRankViews();
+            scheduleSave();
+        }
+
+        function deleteColumn() {
+            const sheet = currentSheet();
+            if (sheet.columns.length <= 1) return;
+            const range = normalizedSelectedRange();
+            const deleteCount = Math.min(range.colEnd - range.colStart + 1, sheet.columns.length - 1);
+            sheet.columns.splice(range.colStart, deleteCount);
+            sheet.rows.forEach(row => row.cells.splice(range.colStart, deleteCount));
+            activeCell = { row: activeCell.row, col: Math.min(range.colStart, sheet.columns.length - 1) };
+            renderWeeklySheet();
+            renderRankViews();
+            scheduleSave();
+        }
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/[&<>"']/g, character => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[character]));
+        }
+
+        function escapeAttribute(value) {
+            return escapeHtml(value).replace(/\n/g, '&#10;');
+        }
+
+        function downloadExcel() {
+            saveSheetData({ silent: true });
+            const sheet = currentSheet();
+            const letterCells = sheet.columns.map((column, index) => `<th>${columnName(index)}</th>`).join('');
+            const fieldCells = sheet.columns.map(column => `<th>${escapeHtml(column.field || '')}</th>`).join('');
+            const eventCells = sheet.columns.map(column => `<th>${escapeHtml(column.eventName || '')}</th>`).join('');
+            const weekCells = sheet.columns.map(column => `<th>${escapeHtml(column.week ? `${appState.selectedYear}년 ${appState.selectedMonth}월 ${column.week}주차` : '추가 열')}</th>`).join('');
+            const bodyRows = sheet.rows.map((row, rowIndex) => {
+                const cells = sheet.columns.map((column, colIndex) => {
+                    const raw = getCellRaw(rowIndex, colIndex);
+                    const display = getCellDisplay(rowIndex, colIndex);
+                    const formulaAttr = isFormula(raw) ? ` x:Formula="${escapeAttribute(raw)}"` : '';
+                    const style = column.type === 'score' ? 'text-align:right;mso-number-format:"\\@";' : 'mso-number-format:"\\@";';
+                    return `<td${formulaAttr} style="${style}" title="${escapeAttribute(raw)}">${escapeHtml(display)}</td>`;
+                }).join('');
+                return `<tr><th>${rowIndex + 1}</th>${cells}</tr>`;
+            }).join('\n');
+
+            const html = `<!DOCTYPE html>
+<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+<head>
+<meta charset="UTF-8">
+<style>
+table { border-collapse: collapse; font-family: Malgun Gothic, Arial, sans-serif; }
+th, td { border: 1px solid #999; padding: 6px 8px; mso-number-format:"\\@"; }
+th { background: #f2f2f2; font-weight: bold; }
+.score { text-align: right; }
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr><th>#</th>${letterCells}</tr>
+<tr><th>주차</th>${weekCells}</tr>
+<tr><th>이벤트</th>${eventCells}</tr>
+<tr><th>구분</th>${fieldCells}</tr>
+</thead>
+<tbody>
+${bodyRows}
+</tbody>
+</table>
+</body>
+</html>`;
+
+            const blob = new Blob(['\uFEFF', html], { type: 'application/vnd.ms-excel;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `2929_UNT_${appState.selectedYear}년_${appState.selectedMonth}월_주차별_랭킹.xls`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            setSheetStatus('엑셀 다운로드 완료');
+        }
+
+        function clearSheetData() {
+            if (!confirm(`${appState.selectedYear}년 ${appState.selectedMonth}월 주차 입력표를 초기화할까요?`)) return;
+            recordHistory();
+            appState.months[sheetKey(appState.selectedYear, appState.selectedMonth)] = makeDefaultSheet(appState.selectedMonth);
+            activeCell = { row: 0, col: 0 };
+            selectedRange = { startRow: 0, startCol: 0, endRow: 0, endCol: 0 };
+            renderWeeklySheet();
+            renderRankViews();
+            saveSheetData();
+            setSheetStatus('초기화됨');
+        }
+
+        function extractRankItems(listId) {
+            const list = document.getElementById(listId);
+            if (!list) return [];
+            return Array.from(list.querySelectorAll('.rank-item')).map(item => {
+                const rankText = item.querySelector('.rank-number')?.textContent || '';
+                const rank = Number((rankText.match(/\d+/) || ['0'])[0]);
+                return {
+                    rank,
+                    nickname: item.querySelector('.player-name')?.textContent.trim() || '',
+                    score: item.querySelector('.score-value')?.textContent.trim() || ''
+                };
+            }).filter(item => item.rank && (item.nickname || item.score));
+        }
+
+        function hasColumnData(sheet, columnIndexes) {
+            return sheet.rows.some(row => {
+                return columnIndexes.some(index => index >= 0 && String(row.cells[index] || '').trim());
+            });
+        }
+
+        function seedRankData(year, month, week, eventName, listId) {
+            const items = extractRankItems(listId);
+            if (!items.length) return;
+
+            const key = sheetKey(year, month);
+            if (!appState.months[key]) {
+                appState.months[key] = makeDefaultSheet(month);
+            }
+            appState.months[key] = normalizeSheet(appState.months[key], month);
+            const sheet = appState.months[key];
+            const nicknameCol = findSimpleWeekFieldColumn(sheet, week, '닉네임');
+            const scoreCol = findSimpleWeekFieldColumn(sheet, week, '점수');
+            if (nicknameCol < 0 || scoreCol < 0) return;
+            if (hasColumnData(sheet, [nicknameCol, scoreCol])) return;
+
+            const maxRank = Math.max(...items.map(item => item.rank));
+            while (sheet.rows.length < maxRank) {
+                sheet.rows.push(makeEmptyRow(sheet.columns.length));
+            }
+
+            setWeekEvent(sheet, week, eventName);
+            items.forEach(item => {
+                const row = sheet.rows[item.rank - 1];
+                if (!row) return;
+                row.cells[nicknameCol] = item.nickname;
+                row.cells[scoreCol] = item.score;
+            });
+        }
+
+        function seedInitialRankData() {
+            seedRankData(DEFAULT_YEAR, 6, 1, '명함 이벤트', 'nameRankingList');
+            seedRankData(DEFAULT_YEAR, 5, 3, '준비전', 'prepareRankingList');
+        }
+
+        function removeMayBExtraColumn() {
+            const key = sheetKey(2026, 5);
+            const sheet = appState.months[key];
+            if (!sheet || !Array.isArray(sheet.columns) || sheet.columns.length <= WEEK_COUNT * 2) return false;
+
+            const targetIndex = 1;
+            const column = sheet.columns[targetIndex];
+            const field = String(column?.field || '');
+            const isExtraColumn = column && (column.custom || !column.week || /추가\s*열|추가열/.test(field));
+            if (!isExtraColumn) return false;
+
+            sheet.columns.splice(targetIndex, 1);
+            sheet.rows.forEach(row => {
+                if (Array.isArray(row.cells)) row.cells.splice(targetIndex, 1);
+            });
+            return true;
+        }
+
+        function clearRankList(listId, message) {
+            const list = document.getElementById(listId);
+            if (!list) return;
+            list.textContent = '';
+            const empty = document.createElement('div');
+            empty.className = 'empty-rank-message';
+            empty.textContent = message;
+            list.appendChild(empty);
+        }
+
+        function appendRankItem(list, rank, nickname, score) {
+            const item = document.createElement('div');
+            item.className = `rank-item ${rank === 1 ? 'top-1' : rank === 2 ? 'top-2' : rank === 3 ? 'top-3' : ''}`.trim();
+
+            const number = document.createElement('div');
+            number.className = 'rank-number';
+            number.textContent = String(rank);
+
+            const info = document.createElement('div');
+            info.className = 'rank-info';
+
+            const name = document.createElement('div');
+            name.className = 'player-name';
+            name.textContent = nickname || '-';
+
+            const scoreLine = document.createElement('div');
+            scoreLine.className = 'player-score';
+            scoreLine.append('점수: ');
+            const scoreValue = document.createElement('span');
+            scoreValue.className = 'score-value';
+            scoreValue.textContent = score || '-';
+            scoreLine.appendChild(scoreValue);
+
+            info.appendChild(name);
+            info.appendChild(scoreLine);
+            item.appendChild(number);
+            item.appendChild(info);
+            list.appendChild(item);
+        }
+
+        function renderRankView(eventName, listId) {
+            const select = document.querySelector(`.view-week-select[data-event-name="${eventName}"]`);
+            const list = document.getElementById(listId);
+            if (!list) return;
+
+            if (!select || select.disabled || !select.value) {
+                clearRankList(listId, `${appState.selectedYear}년 ${appState.selectedMonth}월에 ${eventName} 주차가 없습니다`);
+                return;
+            }
+
+            const sheet = currentSheet();
+            const week = Number(select.value);
+            if (getWeekEvent(sheet, week) !== eventName) {
+                clearRankList(listId, `${appState.selectedYear}년 ${appState.selectedMonth}월 ${week}주차는 ${eventName}이 아닙니다`);
+                return;
+            }
+
+            const nicknameCol = findSimpleWeekFieldColumn(sheet, week, '닉네임');
+            const scoreCol = findSimpleWeekFieldColumn(sheet, week, '점수');
+            if (nicknameCol < 0 || scoreCol < 0) {
+                clearRankList(listId, '표 열을 찾을 수 없습니다');
+                return;
+            }
+
+            const rows = sheet.rows.map((row, index) => ({
+                rank: index + 1,
+                nickname: getCellDisplay(index, nicknameCol),
+                score: getCellDisplay(index, scoreCol)
+            })).filter(row => String(row.nickname || row.score || '').trim());
+
+            list.textContent = '';
+            if (!rows.length) {
+                clearRankList(listId, `${appState.selectedYear}년 ${appState.selectedMonth}월 ${week}주차에 입력된 데이터가 없습니다`);
+                return;
+            }
+
+            rows.forEach(row => appendRankItem(list, row.rank, row.nickname, row.score));
+        }
+
+        function renderRankViews() {
+            renderRankView('명함 이벤트', 'nameRankingList');
+            renderRankView('준비전', 'prepareRankingList');
+        }
+
+        function populateSelect(select, values, selectedValue, labelGetter) {
+            select.textContent = '';
+            values.forEach(value => {
+                const option = document.createElement('option');
+                option.value = String(value);
+                option.textContent = labelGetter ? labelGetter(value) : String(value);
+                if (String(value) === String(selectedValue)) option.selected = true;
                 select.appendChild(option);
             });
         }
 
-        function openDataModal() {
-            document.getElementById('dataModal').classList.add('show');
+        function initializeStaticRankSelectors() {
+            document.querySelectorAll('.rank-view-controls').forEach(control => {
+                const yearSelect = control.querySelector('.view-year-select');
+                const monthSelect = control.querySelector('.view-month-select');
+                const weekSelect = control.querySelector('.view-week-select');
+                const eventName = yearSelect?.dataset.eventName || monthSelect?.dataset.eventName || weekSelect?.dataset.eventName || '';
+                const defaultWeek = Number(weekSelect?.dataset.defaultWeek || 1);
+
+                if (!yearSelect || !monthSelect || !weekSelect) return;
+
+                populateSelect(yearSelect, YEARS, appState.selectedYear, value => `${value}년`);
+                populateSelect(monthSelect, MONTHS, appState.selectedMonth, value => `${value}월`);
+                populateSelect(weekSelect, Array.from({ length: WEEK_COUNT }, (_, index) => index + 1), (appState.viewWeeks && appState.viewWeeks[eventName]) || defaultWeek, value => `${value}주차`);
+
+                yearSelect.addEventListener('change', () => {
+                    updateSharedYear(yearSelect.value, { resetActiveCell: true });
+                    syncControlsFromState();
+                    renderWeeklySheet();
+                    saveSheetData({ silent: true });
+                });
+
+                monthSelect.addEventListener('change', () => {
+                    updateSharedMonth(monthSelect.value, { resetActiveCell: true });
+                    syncControlsFromState();
+                    renderWeeklySheet();
+                    saveSheetData({ silent: true });
+                });
+
+                weekSelect.addEventListener('change', () => {
+                    syncWeekToEvent(eventName, weekSelect.value);
+                });
+            });
+
+            syncControlsFromState();
         }
 
-        function closeDataModal() {
-            document.getElementById('dataModal').classList.remove('show');
-            document.getElementById('statusMessage').textContent = '';
-            document.getElementById('statusMessage').className = 'status-message';
-        }
+        function initializeSheetControls() {
+            const yearSelect = document.getElementById('sheetYearSelect');
+            const monthSelect = document.getElementById('sheetMonthSelect');
+            if (yearSelect) {
+                populateSelect(yearSelect, YEARS, appState.selectedYear, value => `${value}년`);
+                yearSelect.addEventListener('change', () => {
+                    updateSharedYear(yearSelect.value, { resetActiveCell: true });
+                    syncControlsFromState();
+                    renderWeeklySheet();
+                    saveSheetData({ silent: true });
+                });
+            }
 
-        function updateSourceHint() {
-            const sourceType = document.getElementById('sourceType').value;
-            const hint = document.getElementById('sourceHint');
-            if (sourceType === 'csv') {
-                hint.textContent = 'CSV 파일의 직접 다운로드 링크를 입력하세요';
-            } else {
-                hint.textContent = '공개 공유 설정된 Google Sheets URL을 입력하세요';
+            if (monthSelect) {
+                populateSelect(monthSelect, MONTHS, appState.selectedMonth, value => `${value}월`);
+                monthSelect.addEventListener('change', () => {
+                    updateSharedMonth(monthSelect.value, { resetActiveCell: true });
+                    syncControlsFromState();
+                    renderWeeklySheet();
+                    saveSheetData({ silent: true });
+                });
             }
         }
 
-        async function importData() {
-            const sourceType = document.getElementById('sourceType').value;
-            const url = document.getElementById('dataUrl').value.trim();
-            const eventName = document.getElementById('eventSelect').value;
-            const statusMsg = document.getElementById('statusMessage');
+        function bindSheetEvents() {
+            const table = document.getElementById('weeklyRankTable');
+            const formulaInput = document.getElementById('formulaInput');
+            if (!table) return;
 
-            if (!url) {
-                showStatus('URL을 입력해주세요', 'error');
-                return;
-            }
+            table.addEventListener('click', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (!cell) return;
+                setActiveCell(Number(cell.dataset.row), Number(cell.dataset.col), event.shiftKey);
+            });
 
-            try {
-                let csvUrl = url;
+            table.addEventListener('change', event => {
+                const select = event.target.closest('.week-event-select');
+                if (!select) return;
+                const week = Number(select.dataset.week);
+                const eventName = select.value;
+                const sheet = currentSheet();
+                if (getWeekEvent(sheet, week) !== eventName) recordHistory();
+                setWeekEvent(sheet, week, eventName);
+                if (EVENTS.includes(eventName)) {
+                    appState.viewWeeks = { ...DEFAULT_VIEW_WEEKS, ...(appState.viewWeeks || {}), [eventName]: week };
+                }
+                syncControlsFromState();
+                renderWeeklySheet();
+                saveSheetData({ silent: true });
+            });
 
-                if (sourceType === 'google') {
-                    if (url.includes('/edit')) {
-                        const sheetId = url.match(/\/d\/([a-zA-Z0-9-_]+)/)[1];
-                        csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-                    } else if (url.includes('/spreadsheets')) {
-                        const sheetId = url.match(/\/d\/([a-zA-Z0-9-_]+)/)[1];
-                        csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-                    }
+            table.addEventListener('focusin', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (!cell) return;
+                const row = Number(cell.dataset.row);
+                const col = Number(cell.dataset.col);
+                if (isNoneColumn(currentSheet().columns[col])) {
+                    cell.blur();
+                    return;
+                }
+                setActiveCell(row, col);
+                cell.textContent = getCellRaw(row, col);
+            });
+
+            table.addEventListener('focusout', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (cell) finalizeCell(cell);
+            });
+
+            table.addEventListener('input', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (!cell) return;
+                if (cell.classList.contains('readonly')) return;
+                setCellRaw(Number(cell.dataset.row), Number(cell.dataset.col), cell.textContent, { dirty: true });
+                updateCellDisplays();
+                updateFormulaBar();
+                renderRankViews();
+                scheduleSave(cell);
+            });
+
+            table.addEventListener('paste', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (!cell) return;
+                if (cell.classList.contains('readonly')) return;
+                event.preventDefault();
+                const text = (event.clipboardData || window.clipboardData).getData('text/plain');
+                pasteGrid(text, Number(cell.dataset.row), Number(cell.dataset.col));
+            });
+
+            table.addEventListener('keydown', event => {
+                const cell = event.target.closest('.sheet-cell');
+                if (!cell) return;
+
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    finalizeCell(cell);
+                    moveFocus(event.shiftKey ? 'up' : 'down');
                 }
 
-                const response = await fetch(csvUrl);
-                if (!response.ok) throw new Error('파일을 불러올 수 없습니다');
-
-                const text = await response.text();
-                const result = Papa.parse(text, { header: true });
-                const data = result.data.filter(row => row.rank && row.nickname);
-
-                const formattedData = data.map(row => ({
-                    rank: Number(row.rank),
-                    nickname: String(row.nickname).trim(),
-                    score: String(row.score || '').trim()
-                })).sort((a, b) => a.rank - b.rank);
-
-                rankingsData[eventName] = formattedData;
-                localStorage.setItem('rankingsData', JSON.stringify(rankingsData));
-
-                renderRankings();
-                showStatus(`✅ ${formattedData.length}개 데이터 불러오기 완료!`, 'success');
-
-                setTimeout(() => closeDataModal(), 1500);
-            } catch (error) {
-                console.error(error);
-                showStatus(`❌ 데이터 불러오기 실패: ${error.message}`, 'error');
-            }
-        }
-
-        function showStatus(message, type) {
-            const statusMsg = document.getElementById('statusMessage');
-            statusMsg.textContent = message;
-            statusMsg.className = `status-message ${type}`;
-        }
-
-        function renderRankings() {
-            events.forEach(eventName => {
-                const listId = `rankingList-${eventName}`;
-                const data = rankingsData[eventName];
-                renderRankList(listId, data);
+                if (event.key === 'Tab') {
+                    event.preventDefault();
+                    finalizeCell(cell);
+                    moveFocus(event.shiftKey ? 'previous' : 'next');
+                }
             });
-        }
 
-        function renderRankList(listId, data) {
-            const list = document.getElementById(listId);
-            if (!list) return;
+            formulaInput?.addEventListener('input', () => {
+                setCellRaw(activeCell.row, activeCell.col, formulaInput.value, { dirty: true });
+                const cell = getCellElement(activeCell.row, activeCell.col);
+                if (cell) cell.classList.add('dirty');
+                updateCellDisplays();
+                renderRankViews();
+                scheduleSave(cell);
+            });
 
-            list.innerHTML = '';
+            formulaInput?.addEventListener('keydown', event => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    focusCell(activeCell.row, activeCell.col);
+                }
+            });
 
-            if (!data || data.length === 0) {
-                list.innerHTML = '<div class="empty-rank-message">데이터가 없습니다</div>';
-                return;
-            }
-
-            data.forEach(item => {
-                const itemEl = document.createElement('div');
-                itemEl.className = `rank-item ${item.rank === 1 ? 'top-1' : item.rank === 2 ? 'top-2' : item.rank === 3 ? 'top-3' : ''}`.trim();
-
-                const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
-                const medal = medals[item.rank] ? `<span class="medal">${medals[item.rank]}</span>` : '';
-
-                itemEl.innerHTML = `
-                    <div class="rank-number">${item.rank}${medal}</div>
-                    <div class="rank-info">
-                        <div class="player-name">${item.nickname}</div>
-                        <div class="player-score">점수: <span class="score-value">${item.score}</span></div>
-                    </div>
-                `;
-                list.appendChild(itemEl);
+            document.addEventListener('copy', event => {
+                const activeElement = document.activeElement;
+                if (!activeElement || !activeElement.closest || !activeElement.closest('#weeklyRankTable')) return;
+                event.preventDefault();
+                event.clipboardData.setData('text/plain', buildSelectedText(true));
+                setSheetStatus('선택 영역 복사됨');
             });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const savedEvents = localStorage.getItem('events');
-            const savedRankings = localStorage.getItem('rankingsData');
+            seedInitialRankData();
+            const removedMayBExtraColumn = removeMayBExtraColumn();
+            initializeStaticRankSelectors();
+            initializeSheetControls();
+            renderWeeklySheet();
+            renderRankViews();
+            bindSheetEvents();
+            if (removedMayBExtraColumn) saveSheetData({ silent: true });
 
-            if (savedEvents) {
-                events = JSON.parse(savedEvents);
-                activeEvent = events[0];
-            }
-
-            if (savedRankings) {
-                rankingsData = JSON.parse(savedRankings);
-            }
-
-            renderEventTabs();
-            renderEventSections();
-            updateEventSelectOptions();
-
-            document.getElementById('dataModal').addEventListener('click', (e) => {
-                if (e.target.id === 'dataModal') closeDataModal();
+            document.getElementById('saveSheetBtn')?.addEventListener('click', () => saveSheetData());
+            document.getElementById('downloadExcelBtn')?.addEventListener('click', downloadExcel);
+            document.getElementById('undoSheetBtn')?.addEventListener('click', undoSheetChange);
+            document.getElementById('redoSheetBtn')?.addEventListener('click', redoSheetChange);
+            document.getElementById('addRowBtn')?.addEventListener('click', addRow);
+            document.getElementById('deleteRowBtn')?.addEventListener('click', deleteRow);
+            document.getElementById('clearSheetBtn')?.addEventListener('click', clearSheetData);
+            document.getElementById('zoomSlider')?.addEventListener('input', event => setSheetZoom(event.target.value));
+            document.getElementById('zoomOutBtn')?.addEventListener('click', () => setSheetZoom(sheetZoom - 5));
+            document.getElementById('zoomInBtn')?.addEventListener('click', () => setSheetZoom(sheetZoom + 5));
+            document.querySelectorAll('.sheet-menu-panel button').forEach(button => {
+                button.addEventListener('click', () => button.closest('details')?.removeAttribute('open'));
             });
-
-            document.getElementById('addEventModal').addEventListener('click', (e) => {
-                if (e.target.id === 'addEventModal') closeAddEventModal();
+            document.addEventListener('click', event => {
+                if (event.target.closest('.sheet-menu')) return;
+                document.querySelectorAll('.sheet-menu[open]').forEach(menu => menu.removeAttribute('open'));
             });
-
-            document.getElementById('newEventName').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') addNewEvent();
-            });
+            applySheetZoom();
+            updateHistoryButtons();
         });
+
+        function openDataModal() {
+            alert('데이터 import 기능은 준비 중입니다');
+        }
+
+        function openAddEventModal() {
+            alert('이벤트 추가 기능은 준비 중입니다');
+        }
     </script>
 </body>
 </html>
