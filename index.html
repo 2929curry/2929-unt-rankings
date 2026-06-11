@@ -2657,6 +2657,16 @@ ${bodyRows}
             statusMsg.style.color = isError ? '#991b1b' : '#065f46';
         }
 
+        function detectColumnNames(headers) {
+            const nicknameAliases = ['nickname', '닉네임', '사용자명', '이름', '플레이어', 'name', 'username', '유저명'];
+            const scoreAliases = ['score', '점수', '스코어', 'points', '포인트', '값'];
+
+            const foundNickname = headers.find(h => nicknameAliases.some(alias => String(h || '').toLowerCase().includes(alias.toLowerCase())));
+            const foundScore = headers.find(h => scoreAliases.some(alias => String(h || '').toLowerCase().includes(alias.toLowerCase())));
+
+            return { nicknameCol: foundNickname, scoreCol: foundScore };
+        }
+
         async function importDataFromCsv() {
             const year = Number(document.getElementById('importYearSelect').value);
             const month = Number(document.getElementById('importMonthSelect').value);
@@ -2681,10 +2691,24 @@ ${bodyRows}
                 }
 
                 const result = Papa.parse(csvText, { header: true });
-                const data = result.data.filter(row => row.nickname && (row.score || row.점수));
+                const headers = Object.keys(result.data[0] || {});
+                const { nicknameCol, scoreCol } = detectColumnNames(headers);
+
+                if (!nicknameCol) {
+                    showImportStatus(`헤더를 찾을 수 없습니다. 가능한 헤더: ${headers.join(', ')}`, true);
+                    return;
+                }
+
+                const data = result.data
+                    .filter(row => row[nicknameCol] && String(row[nicknameCol]).trim())
+                    .map(row => ({
+                        nickname: String(row[nicknameCol]).trim(),
+                        score: scoreCol ? String(row[scoreCol] || '').trim() : ''
+                    }))
+                    .filter(row => row.nickname);
 
                 if (data.length === 0) {
-                    showImportStatus('유효한 데이터가 없습니다 (닉네임 필수)', true);
+                    showImportStatus(`유효한 데이터가 없습니다. 헤더: ${headers.join(', ')}`, true);
                     return;
                 }
 
@@ -2695,10 +2719,10 @@ ${bodyRows}
                 appState.months[key] = normalizeSheet(appState.months[key], month);
 
                 const sheet = appState.months[key];
-                const nicknameCol = findSimpleWeekFieldColumn(sheet, week, '닉네임');
-                const scoreCol = findSimpleWeekFieldColumn(sheet, week, '점수');
+                const nicknameColIndex = findSimpleWeekFieldColumn(sheet, week, '닉네임');
+                const scoreColIndex = findSimpleWeekFieldColumn(sheet, week, '점수');
 
-                if (nicknameCol < 0 || scoreCol < 0) {
+                if (nicknameColIndex < 0 || scoreColIndex < 0) {
                     showImportStatus('주차 열을 찾을 수 없습니다', true);
                     return;
                 }
@@ -2706,8 +2730,8 @@ ${bodyRows}
                 const maxRank = Math.min(data.length, sheet.rows.length);
                 data.forEach((row, index) => {
                     if (index >= maxRank) return;
-                    sheet.rows[index].cells[nicknameCol] = row.nickname || '';
-                    sheet.rows[index].cells[scoreCol] = row.score || row.점수 || '';
+                    sheet.rows[index].cells[nicknameColIndex] = row.nickname;
+                    sheet.rows[index].cells[scoreColIndex] = row.score;
                 });
 
                 setWeekEvent(sheet, week, EVENTS[0]);
