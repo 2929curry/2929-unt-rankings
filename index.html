@@ -119,7 +119,21 @@
             overflow-x: auto;
         }
 
-        .tab-button,
+        .tab-button {
+            min-height: 34px;
+            padding: 7px 13px;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+            white-space: nowrap;
+            transition: color 0.15s ease;
+        }
+
         .sheet-actions button,
         .sheet-menu summary,
         .sheet-menu-panel button,
@@ -138,18 +152,21 @@
             transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
         }
 
-        .tab-button:hover,
+        .tab-button:hover {
+            color: var(--accent-ink);
+        }
+
+        .tab-button.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5px;
+        }
+
         .sheet-actions button:hover,
         .sheet-menu summary:hover,
         .sheet-menu-panel button:hover,
         .zoom-button:hover {
             background: #f8fafc;
-            color: var(--accent-ink);
-            border-color: #F8C7D6;
-        }
-
-        .tab-button.active {
-            background: var(--accent-soft);
             color: var(--accent-ink);
             border-color: #F8C7D6;
         }
@@ -2750,41 +2767,31 @@ ${bodyRows}
             const sheet = currentSheet();
             const rows = [];
 
-            sheet.rows.forEach((rowData, rowIndex) => {
-                const nicknameIdx = sheet.columns.findIndex(col => col.field === '닉네임' && col.week === 1);
-                const scoreIdx = sheet.columns.findIndex(col => col.field === '점수' && col.week === 1);
+            for (let week = 1; week <= WEEK_COUNT; week++) {
+                const eventName = getWeekEvent(sheet, week);
+                if (eventName === EVENT_NONE) continue;
 
-                if (nicknameIdx < 0 || scoreIdx < 0) return;
+                const nickCol = sheet.columns.findIndex(c => c.week === week && c.field === '닉네임');
+                const scoreCol = sheet.columns.findIndex(c => c.week === week && c.field === '점수');
 
-                const nickname = String(getCellDisplay(rowIndex, nicknameIdx) || '').trim();
-                const score = String(getCellDisplay(rowIndex, scoreIdx) || '').trim();
+                if (nickCol < 0 || scoreCol < 0) continue;
 
-                if (!nickname || !score) return;
+                sheet.rows.forEach((rowData, rowIndex) => {
+                    const nick = String(getCellDisplay(rowIndex, nickCol) || '').trim();
+                    const scr = String(getCellDisplay(rowIndex, scoreCol) || '').trim();
 
-                for (let week = 1; week <= WEEK_COUNT; week++) {
-                    const eventName = getWeekEvent(sheet, week);
-                    if (eventName === EVENT_NONE) continue;
-
-                    const nickCol = sheet.columns.findIndex(c => c.week === week && c.field === '닉네임');
-                    const scoreCol = sheet.columns.findIndex(c => c.week === week && c.field === '점수');
-
-                    if (nickCol >= 0 && scoreCol >= 0) {
-                        const nick = String(getCellDisplay(rowIndex, nickCol) || '').trim();
-                        const scr = String(getCellDisplay(rowIndex, scoreCol) || '').trim();
-
-                        if (nick && scr) {
-                            rows.push({
-                                nickname: nick,
-                                score: scr,
-                                year: appState.selectedYear,
-                                month: appState.selectedMonth,
-                                week: week,
-                                event: eventName
-                            });
-                        }
+                    if (nick && scr) {
+                        rows.push({
+                            nickname: nick,
+                            score: scr,
+                            year: appState.selectedYear,
+                            month: appState.selectedMonth,
+                            week: week,
+                            event: eventName
+                        });
                     }
-                }
-            });
+                });
+            }
 
             if (rows.length === 0) {
                 alert('저장할 데이터가 없습니다');
