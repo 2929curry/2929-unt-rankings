@@ -520,10 +520,7 @@
 
                     <div class="form-group">
                         <label>이벤트 선택</label>
-                        <select id="eventSelect">
-                            <option value="nameEvent">명함 이벤트</option>
-                            <option value="prepareEvent">준비전</option>
-                        </select>
+                        <select id="eventSelect"></select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -533,25 +530,34 @@
             </div>
         </div>
 
+        <div id="addEventModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">이벤트 추가</div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>이벤트명</label>
+                        <input type="text" id="newEventName" placeholder="예: 월드컵, 특별이벤트">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="closeAddEventModal()">취소</button>
+                    <button class="primary-btn" onclick="addNewEvent()">추가</button>
+                </div>
+            </div>
+        </div>
+
         <div class="event-tabs">
-            <button type="button" class="tab-button active" data-event-target="name-event" onclick="showEvent('name-event', this)">명함 이벤트</button>
-            <button type="button" class="tab-button" data-event-target="prepare-event" onclick="showEvent('prepare-event', this)">준비전</button>
+            <div id="eventTabsContainer" style="display: flex; gap: 8px; flex: 1;"></div>
+            <button type="button" class="tab-button" style="background: #d1fae5; color: #065f46; border-color: #6ee7b7;" onclick="openAddEventModal()">+ 이벤트 추가</button>
         </div>
 
-        <div id="name-event" class="event-section active">
-            <h2 class="event-title">명함 이벤트</h2>
-            <div class="ranking-list" id="nameRankingList"></div>
-        </div>
-
-        <div id="prepare-event" class="event-section">
-            <h2 class="event-title">준비전</h2>
-            <div class="ranking-list" id="prepareRankingList"></div>
-        </div>
+        <div id="eventSectionsContainer"></div>
     </div>
 
     <script>
-        const INITIAL_RANKINGS_DATA = {
-            nameEvent: [
+        let events = ['명함 이벤트', '준비전'];
+        let rankingsData = {
+            '명함 이벤트': [
                 { rank: 1, nickname: '[InX]Frostnight', score: '188,929,277' },
                 { rank: 2, nickname: '인소전트', score: '140,768,728' },
                 { rank: 3, nickname: '[TPE]Akira愛', score: '109,809,083' },
@@ -561,7 +567,7 @@
                 { rank: 7, nickname: '[TPE]M.iMε.ω', score: '84,572,237' },
                 { rank: 8, nickname: '[TPE]Twinkle Twinkle', score: '81,664,382' }
             ],
-            prepareEvent: [
+            '준비전': [
                 { rank: 1, nickname: '[UNT]Absalom', score: '169,403,299' },
                 { rank: 2, nickname: '[InX]AmericanoOnBuffs', score: '140,147,730' },
                 { rank: 3, nickname: '[EXO]Ladypixel\'ᵋ~exo', score: '136,684,470' },
@@ -569,19 +575,97 @@
                 { rank: 5, nickname: '[EXO]Umer', score: '123,708,182' }
             ]
         };
+        let activeEvent = '명함 이벤트';
 
-        let rankingsData = { ...INITIAL_RANKINGS_DATA };
-
-        function showEvent(eventId, sourceButton) {
+        function showEvent(eventName, sourceButton) {
+            activeEvent = eventName;
             document.querySelectorAll('.event-section').forEach(section => {
                 section.classList.remove('active');
             });
             document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
             });
-            const section = document.getElementById(eventId);
+            const section = document.getElementById(`event-${eventName}`);
             if (section) section.classList.add('active');
             if (sourceButton) sourceButton.classList.add('active');
+        }
+
+        function openAddEventModal() {
+            document.getElementById('addEventModal').classList.add('show');
+            document.getElementById('newEventName').value = '';
+            document.getElementById('newEventName').focus();
+        }
+
+        function closeAddEventModal() {
+            document.getElementById('addEventModal').classList.remove('show');
+        }
+
+        function addNewEvent() {
+            const eventName = document.getElementById('newEventName').value.trim();
+
+            if (!eventName) {
+                alert('이벤트명을 입력해주세요');
+                return;
+            }
+
+            if (events.includes(eventName)) {
+                alert('이미 존재하는 이벤트입니다');
+                return;
+            }
+
+            events.push(eventName);
+            rankingsData[eventName] = [];
+
+            localStorage.setItem('events', JSON.stringify(events));
+            localStorage.setItem('rankingsData', JSON.stringify(rankingsData));
+
+            renderEventTabs();
+            renderEventSections();
+            updateEventSelectOptions();
+            closeAddEventModal();
+        }
+
+        function renderEventTabs() {
+            const container = document.getElementById('eventTabsContainer');
+            container.innerHTML = '';
+
+            events.forEach((eventName, index) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `tab-button ${eventName === activeEvent ? 'active' : ''}`;
+                button.textContent = eventName;
+                button.onclick = () => showEvent(eventName, button);
+                container.appendChild(button);
+            });
+        }
+
+        function renderEventSections() {
+            const container = document.getElementById('eventSectionsContainer');
+            container.innerHTML = '';
+
+            events.forEach(eventName => {
+                const section = document.createElement('div');
+                section.id = `event-${eventName}`;
+                section.className = `event-section ${eventName === activeEvent ? 'active' : ''}`;
+                section.innerHTML = `
+                    <h2 class="event-title">${eventName}</h2>
+                    <div class="ranking-list" id="rankingList-${eventName}"></div>
+                `;
+                container.appendChild(section);
+            });
+
+            renderRankings();
+        }
+
+        function updateEventSelectOptions() {
+            const select = document.getElementById('eventSelect');
+            select.innerHTML = '';
+            events.forEach(eventName => {
+                const option = document.createElement('option');
+                option.value = eventName;
+                option.textContent = eventName;
+                select.appendChild(option);
+            });
         }
 
         function openDataModal() {
@@ -607,7 +691,7 @@
         async function importData() {
             const sourceType = document.getElementById('sourceType').value;
             const url = document.getElementById('dataUrl').value.trim();
-            const eventSelect = document.getElementById('eventSelect').value;
+            const eventName = document.getElementById('eventSelect').value;
             const statusMsg = document.getElementById('statusMessage');
 
             if (!url) {
@@ -641,7 +725,7 @@
                     score: String(row.score || '').trim()
                 })).sort((a, b) => a.rank - b.rank);
 
-                rankingsData[eventSelect === 'nameEvent' ? 'nameEvent' : 'prepareEvent'] = formattedData;
+                rankingsData[eventName] = formattedData;
                 localStorage.setItem('rankingsData', JSON.stringify(rankingsData));
 
                 renderRankings();
@@ -661,8 +745,11 @@
         }
 
         function renderRankings() {
-            renderRankList('nameRankingList', rankingsData.nameEvent);
-            renderRankList('prepareRankingList', rankingsData.prepareEvent);
+            events.forEach(eventName => {
+                const listId = `rankingList-${eventName}`;
+                const data = rankingsData[eventName];
+                renderRankList(listId, data);
+            });
         }
 
         function renderRankList(listId, data) {
@@ -695,14 +782,32 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('rankingsData');
-            if (saved) {
-                rankingsData = JSON.parse(saved);
+            const savedEvents = localStorage.getItem('events');
+            const savedRankings = localStorage.getItem('rankingsData');
+
+            if (savedEvents) {
+                events = JSON.parse(savedEvents);
+                activeEvent = events[0];
             }
-            renderRankings();
+
+            if (savedRankings) {
+                rankingsData = JSON.parse(savedRankings);
+            }
+
+            renderEventTabs();
+            renderEventSections();
+            updateEventSelectOptions();
 
             document.getElementById('dataModal').addEventListener('click', (e) => {
                 if (e.target.id === 'dataModal') closeDataModal();
+            });
+
+            document.getElementById('addEventModal').addEventListener('click', (e) => {
+                if (e.target.id === 'addEventModal') closeAddEventModal();
+            });
+
+            document.getElementById('newEventName').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addNewEvent();
             });
         });
     </script>
