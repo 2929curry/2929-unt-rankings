@@ -822,6 +822,7 @@
             <div style="display: flex; gap: 8px; align-items: center;">
                 <button class="data-import-btn" onclick="openDataModal()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">📊 데이터 import</button>
                 <button class="data-import-btn" onclick="saveToGoogleSheets()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">☁️ Sheets 저장</button>
+                <button class="data-import-btn" onclick="loadFromGoogleSheets()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">📥 Sheets 불러오기</button>
                 <span class="version-badge">Local/Web</span>
             </div>
         </header>
@@ -2816,6 +2817,37 @@ ${bodyRows}
                 setSheetStatus(`✅ ${rows.length}개 데이터를 Google Sheets에 저장했습니다!`);
             } catch (error) {
                 setSheetStatus(`❌ Google Sheets 저장 실패: ${error.message}`);
+            }
+        }
+
+        async function loadFromGoogleSheets() {
+            try {
+                setSheetStatus('Google Sheets에서 불러오는 중...');
+                const response = await fetch(GOOGLE_APPS_SCRIPT_URL);
+                const result = await response.json();
+
+                if (!result.success || !result.data) {
+                    throw new Error('데이터를 불러올 수 없습니다');
+                }
+
+                const sheet = currentSheet();
+                const data = result.data;
+
+                for (let rowIndex = 0; rowIndex < data.length && rowIndex < sheet.rows.length; rowIndex++) {
+                    for (let colIndex = 0; colIndex < data[rowIndex].length && colIndex < sheet.columns.length; colIndex++) {
+                        const value = String(data[rowIndex][colIndex] || '').trim();
+                        if (value) {
+                            sheet.rows[rowIndex].cells[colIndex] = value;
+                        }
+                    }
+                }
+
+                saveSheetData({ silent: true });
+                renderWeeklySheet();
+                renderRankViews();
+                setSheetStatus(`✅ ${data.length}개 행의 데이터를 불러왔습니다!`);
+            } catch (error) {
+                setSheetStatus(`❌ Google Sheets 불러오기 실패: ${error.message}`);
             }
         }
 
