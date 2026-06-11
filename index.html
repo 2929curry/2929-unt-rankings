@@ -810,7 +810,6 @@
 
         <div class="event-tabs">
             <button type="button" class="tab-button active" data-event-target="weekly-entry" onclick="showEvent('weekly-entry', this)">주차 입력표</button>
-            <button type="button" class="tab-button" style="background: #d1fae5; color: #065f46; border-color: #6ee7b7; margin-left: auto;" onclick="openAddEventModal()">+ 이벤트 추가</button>
         </div>
 
 
@@ -872,15 +871,35 @@
         </div>
     </div>
 
+    <div id="addEventModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);">
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+            <div style="background-color: #fefefe; padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text);">새 이벤트 추가</div>
+                <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">이벤트명</label>
+                        <input type="text" id="newEventNameInput" placeholder="예: 월드컵, 특별이벤트" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button onclick="closeAddEventModal()" style="min-height: 34px; padding: 7px 16px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-weight: 700; font-size: 13px;">취소</button>
+                    <button onclick="addNewEventToDropdown()" style="min-height: 34px; padding: 7px 16px; border: 1px solid #111827; border-radius: 8px; background: #111827; color: #fff; cursor: pointer; font-weight: 700; font-size: 13px;">추가</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const STORAGE_KEY = 'wos2929_unt_rankings_spreadsheet_v3';
         const LEGACY_STORAGE_KEY = 'wos2929_unt_rankings_june_2026_local';
+        const EVENTS_STORAGE_KEY = 'wos2929_unt_events';
         const DEFAULT_YEAR = 2026;
         const YEARS = Array.from({ length: 7 }, (_, index) => DEFAULT_YEAR - 2 + index);
         const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
-        const EVENTS = ['명함 이벤트', '준비전'];
+        let EVENTS = ['명함 이벤트', '준비전'];
         const EVENT_NONE = '없음';
-        const SHEET_EVENTS = [...EVENTS, EVENT_NONE];
+        const getSheetEvents = () => [...EVENTS, EVENT_NONE];
+        let SHEET_EVENTS = getSheetEvents();
         const WEEK_COUNT = 5;
         const DEFAULT_ROW_COUNT = 100;
         const HISTORY_LIMIT = 50;
@@ -1756,7 +1775,7 @@
                     const select = document.createElement('select');
                     select.className = 'week-event-select';
                     select.dataset.week = String(week);
-                    populateSelect(select, SHEET_EVENTS, getWeekEvent(sheet, week));
+                    populateSelect(select, getSheetEvents(), getWeekEvent(sheet, week), null, true);
                     select.classList.toggle('none-selected', select.value === EVENT_NONE);
                     label.appendChild(text);
                     label.appendChild(select);
@@ -2230,7 +2249,7 @@ ${bodyRows}
             renderRankView('준비전', 'prepareRankingList');
         }
 
-        function populateSelect(select, values, selectedValue, labelGetter) {
+        function populateSelect(select, values, selectedValue, labelGetter, isEventSelect = false) {
             select.textContent = '';
             values.forEach(value => {
                 const option = document.createElement('option');
@@ -2239,6 +2258,13 @@ ${bodyRows}
                 if (String(value) === String(selectedValue)) option.selected = true;
                 select.appendChild(option);
             });
+
+            if (isEventSelect) {
+                const addOption = document.createElement('option');
+                addOption.value = '__ADD_EVENT__';
+                addOption.textContent = '+ 새 이벤트';
+                select.appendChild(addOption);
+            }
         }
 
         function initializeStaticRankSelectors() {
@@ -2317,6 +2343,13 @@ ${bodyRows}
                 if (!select) return;
                 const week = Number(select.dataset.week);
                 const eventName = select.value;
+
+                if (eventName === '__ADD_EVENT__') {
+                    select.value = getWeekEvent(currentSheet(), week);
+                    openAddEventModal(week);
+                    return;
+                }
+
                 const sheet = currentSheet();
                 if (getWeekEvent(sheet, week) !== eventName) recordHistory();
                 setWeekEvent(sheet, week, eventName);
@@ -2408,7 +2441,80 @@ ${bodyRows}
             });
         }
 
+        function loadEventsFromStorage() {
+            try {
+                const saved = localStorage.getItem(EVENTS_STORAGE_KEY);
+                if (saved) {
+                    EVENTS = JSON.parse(saved);
+                    SHEET_EVENTS = getSheetEvents();
+                }
+            } catch (error) {
+                console.error('Failed to load events:', error);
+            }
+        }
+
+        function saveEventsToStorage() {
+            try {
+                localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(EVENTS));
+            } catch (error) {
+                console.error('Failed to save events:', error);
+            }
+        }
+
+        let currentWeekForEvent = null;
+
+        function openAddEventModal(week) {
+            currentWeekForEvent = week;
+            const modal = document.getElementById('addEventModal');
+            const input = document.getElementById('newEventNameInput');
+            if (modal && input) {
+                modal.style.display = 'flex';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function closeAddEventModal() {
+            const modal = document.getElementById('addEventModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            currentWeekForEvent = null;
+        }
+
+        function addNewEventToDropdown() {
+            const input = document.getElementById('newEventNameInput');
+            if (!input) return;
+
+            const eventName = input.value.trim();
+            if (!eventName) {
+                alert('이벤트명을 입력해주세요');
+                return;
+            }
+
+            if (EVENTS.includes(eventName)) {
+                alert('이미 존재하는 이벤트입니다');
+                return;
+            }
+
+            EVENTS.push(eventName);
+            SHEET_EVENTS = getSheetEvents();
+            saveEventsToStorage();
+
+            if (currentWeekForEvent) {
+                const sheet = currentSheet();
+                setWeekEvent(sheet, currentWeekForEvent, eventName);
+                appState.viewWeeks = { ...DEFAULT_VIEW_WEEKS, ...(appState.viewWeeks || {}), [eventName]: currentWeekForEvent };
+                saveSheetData({ silent: true });
+            }
+
+            renderWeeklySheet();
+            syncControlsFromState();
+            closeAddEventModal();
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            loadEventsFromStorage();
             seedInitialRankData();
             const removedMayBExtraColumn = removeMayBExtraColumn();
             initializeStaticRankSelectors();
@@ -2437,6 +2543,20 @@ ${bodyRows}
             });
             applySheetZoom();
             updateHistoryButtons();
+
+            const addEventModal = document.getElementById('addEventModal');
+            if (addEventModal) {
+                addEventModal.addEventListener('click', event => {
+                    if (event.target === addEventModal) closeAddEventModal();
+                });
+            }
+
+            const newEventInput = document.getElementById('newEventNameInput');
+            if (newEventInput) {
+                newEventInput.addEventListener('keypress', event => {
+                    if (event.key === 'Enter') addNewEventToDropdown();
+                });
+            }
         });
 
         function openDataModal() {
