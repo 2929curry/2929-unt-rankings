@@ -2830,22 +2830,71 @@ ${bodyRows}
                     throw new Error('데이터를 불러올 수 없습니다');
                 }
 
-                const sheet = currentSheet();
-                const data = result.data;
+                const rawData = result.data;
 
-                for (let rowIndex = 0; rowIndex < data.length && rowIndex < sheet.rows.length; rowIndex++) {
-                    for (let colIndex = 0; colIndex < data[rowIndex].length && colIndex < sheet.columns.length; colIndex++) {
-                        const value = String(data[rowIndex][colIndex] || '').trim();
-                        if (value) {
-                            sheet.rows[rowIndex].cells[colIndex] = value;
-                        }
+                // 첫 행이 헤더인 경우 제외
+                const dataRows = rawData.slice(0, 1).some(row =>
+                    String(row[0] || '').toLowerCase().includes('nickname')
+                ) ? rawData.slice(1) : rawData;
+
+                // {nickname, score, year, month, week, event} 형식으로 파싱
+                const records = dataRows.map(row => ({
+                    nickname: String(row[0] || '').trim(),
+                    score: String(row[1] || '').trim(),
+                    year: Number(row[2]) || appState.selectedYear,
+                    month: Number(row[3]) || appState.selectedMonth,
+                    week: Number(row[4]) || 1,
+                    event: String(row[5] || '').trim() || EVENT_NONE
+                })).filter(r => r.nickname && r.score);
+
+                // 연도/월별로 그룹화
+                const byYearMonth = {};
+                records.forEach(record => {
+                    const key = sheetKey(record.year, record.month);
+                    if (!byYearMonth[key]) byYearMonth[key] = [];
+                    byYearMonth[key].push(record);
+                });
+
+                // 각 연도/월의 sheet에 데이터 입력
+                Object.entries(byYearMonth).forEach(([key, records]) => {
+                    if (!appState.months[key]) {
+                        const month = monthFromSheetKey(key, appState.selectedMonth);
+                        appState.months[key] = makeDefaultSheet(month);
                     }
-                }
+                    const sheet = appState.months[key];
+
+                    // 이벤트와 주차 설정
+                    const eventsByWeek = {};
+                    records.forEach(r => {
+                        if (!eventsByWeek[r.week]) eventsByWeek[r.week] = r.event;
+                    });
+                    Object.entries(eventsByWeek).forEach(([week, eventName]) => {
+                        if (eventName && eventName !== EVENT_NONE) {
+                            setWeekEvent(sheet, Number(week), eventName);
+                        }
+                    });
+
+                    // 데이터 입력
+                    records.forEach(record => {
+                        const nickCol = findSimpleWeekFieldColumn(sheet, record.week, '닉네임');
+                        const scoreCol = findSimpleWeekFieldColumn(sheet, record.week, '점수');
+                        if (nickCol < 0 || scoreCol < 0) return;
+
+                        for (let i = 0; i < sheet.rows.length; i++) {
+                            if (!sheet.rows[i].cells[nickCol]) {
+                                sheet.rows[i].cells[nickCol] = record.nickname;
+                                sheet.rows[i].cells[scoreCol] = record.score;
+                                break;
+                            }
+                        }
+                    });
+                });
 
                 saveSheetData({ silent: true });
+                syncControlsFromState();
                 renderWeeklySheet();
                 renderRankViews();
-                setSheetStatus(`✅ ${data.length}개 행의 데이터를 불러왔습니다!`);
+                setSheetStatus(`✅ ${records.length}개 데이터를 불러왔습니다!`);
             } catch (error) {
                 setSheetStatus(`❌ Google Sheets 불러오기 실패: ${error.message}`);
             }
