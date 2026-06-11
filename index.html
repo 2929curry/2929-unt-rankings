@@ -804,6 +804,7 @@
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
                 <button class="data-import-btn" onclick="openDataModal()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">📊 데이터 import</button>
+                <button class="data-import-btn" onclick="saveToGoogleSheets()" style="padding: 8px 14px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-size: 12px; font-weight: 700;">☁️ Sheets 저장</button>
                 <span class="version-badge">Local/Web</span>
             </div>
         </header>
@@ -926,6 +927,7 @@
         const STORAGE_KEY = 'wos2929_unt_rankings_spreadsheet_v3';
         const LEGACY_STORAGE_KEY = 'wos2929_unt_rankings_june_2026_local';
         const EVENTS_STORAGE_KEY = 'wos2929_unt_events';
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3F8xkmh_80tMuKx7hRjbHsDn-zNxkaO8Mh41gsCRiuBvuph31NNA7LDvcrNxOZcl6/exec';
         const DEFAULT_YEAR = 2026;
         const YEARS = Array.from({ length: 7 }, (_, index) => DEFAULT_YEAR - 2 + index);
         const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
@@ -2741,6 +2743,72 @@ ${bodyRows}
                 setTimeout(() => closeDataImportModal(), 1500);
             } catch (error) {
                 showImportStatus(`❌ 오류: ${error.message}`, true);
+            }
+        }
+
+        async function saveToGoogleSheets() {
+            const sheet = currentSheet();
+            const rows = [];
+
+            sheet.rows.forEach((rowData, rowIndex) => {
+                const nicknameIdx = sheet.columns.findIndex(col => col.field === '닉네임' && col.week === 1);
+                const scoreIdx = sheet.columns.findIndex(col => col.field === '점수' && col.week === 1);
+
+                if (nicknameIdx < 0 || scoreIdx < 0) return;
+
+                const nickname = String(getCellDisplay(rowIndex, nicknameIdx) || '').trim();
+                const score = String(getCellDisplay(rowIndex, scoreIdx) || '').trim();
+
+                if (!nickname || !score) return;
+
+                for (let week = 1; week <= WEEK_COUNT; week++) {
+                    const eventName = getWeekEvent(sheet, week);
+                    if (eventName === EVENT_NONE) continue;
+
+                    const nickCol = sheet.columns.findIndex(c => c.week === week && c.field === '닉네임');
+                    const scoreCol = sheet.columns.findIndex(c => c.week === week && c.field === '점수');
+
+                    if (nickCol >= 0 && scoreCol >= 0) {
+                        const nick = String(getCellDisplay(rowIndex, nickCol) || '').trim();
+                        const scr = String(getCellDisplay(rowIndex, scoreCol) || '').trim();
+
+                        if (nick && scr) {
+                            rows.push({
+                                nickname: nick,
+                                score: scr,
+                                year: appState.selectedYear,
+                                month: appState.selectedMonth,
+                                week: week,
+                                event: eventName
+                            });
+                        }
+                    }
+                }
+            });
+
+            if (rows.length === 0) {
+                alert('저장할 데이터가 없습니다');
+                return;
+            }
+
+            try {
+                setSheetStatus('Google Sheets에 저장 중...');
+
+                for (const row of rows) {
+                    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(row)
+                    });
+
+                    const result = await response.json();
+                    if (!result.success) {
+                        throw new Error('저장 실패');
+                    }
+                }
+
+                setSheetStatus(`✅ ${rows.length}개 데이터를 Google Sheets에 저장했습니다!`);
+            } catch (error) {
+                setSheetStatus(`❌ Google Sheets 저장 실패: ${error.message}`);
             }
         }
     </script>
