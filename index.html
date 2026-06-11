@@ -878,7 +878,7 @@
                 <div style="margin-bottom: 20px;">
                     <div style="margin-bottom: 14px;">
                         <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">이벤트명</label>
-                        <input type="text" id="newEventNameInput" placeholder="예: 연맹총동원, 행상 이벤트 등" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;">
+                        <input type="text" id="newEventNameInput" placeholder="예: 명함 이벤트 등" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;">
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; justify-content: flex-end;">
@@ -896,7 +896,7 @@
         const DEFAULT_YEAR = 2026;
         const YEARS = Array.from({ length: 7 }, (_, index) => DEFAULT_YEAR - 2 + index);
         const MONTHS = Array.from({ length: 12 }, (_, index) => index + 1);
-        let EVENTS = ['명함 이벤트', '준비전'];
+        let EVENTS = ['연맹 대작전', '빙원의 왕', '연맹총동원', '최강 왕국'];
         const EVENT_NONE = '없음';
         const getSheetEvents = () => [...EVENTS, EVENT_NONE];
         let SHEET_EVENTS = getSheetEvents();
@@ -904,7 +904,7 @@
         const DEFAULT_ROW_COUNT = 100;
         const HISTORY_LIMIT = 50;
         const FORMULA_NAMES = ['SUM', 'AVERAGE', 'IF', 'MIN', 'MAX', 'COUNT', 'ROUND'];
-        const DEFAULT_VIEW_WEEKS = { '명함 이벤트': 1, '준비전': 3 };
+        const DEFAULT_VIEW_WEEKS = { '연맹 대작전': 1, '빙원의 왕': 2, '연맹총동원': 3, '최강 왕국': 4 };
         let saveTimer = null;
         let appState = loadAppState();
         let activeCell = { row: 0, col: 0 };
@@ -2143,8 +2143,7 @@ ${bodyRows}
         }
 
         function seedInitialRankData() {
-            seedRankData(DEFAULT_YEAR, 6, 1, '명함 이벤트', 'nameRankingList');
-            seedRankData(DEFAULT_YEAR, 5, 3, '준비전', 'prepareRankingList');
+            // 초기 데이터는 사용자가 입력하도록 변경됨
         }
 
         function removeMayBExtraColumn() {
