@@ -871,6 +871,39 @@
         </div>
     </div>
 
+    <div id="dataImportModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);">
+        <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
+            <div style="background-color: #fefefe; padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text);">데이터 import</div>
+                <div id="importStatusMessage" style="padding: 10px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; margin-bottom: 12px; display: none;"></div>
+                <div style="margin-bottom: 20px;">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">년도</label>
+                        <select id="importYearSelect" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;"></select>
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">월</label>
+                        <select id="importMonthSelect" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;"></select>
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">주차</label>
+                        <select id="importWeekSelect" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;"></select>
+                    </div>
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; color: var(--text);">CSV 파일 선택</label>
+                        <input type="file" id="importCsvFile" accept=".csv" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px;">
+                        <div style="font-size: 11px; color: #5f6673; margin-top: 6px;">또는 URL 입력</div>
+                        <input type="text" id="importCsvUrl" placeholder="https://example.com/data.csv" style="width: 100%; padding: 10px; border: 1px solid #d8dee8; border-radius: 8px; font-family: inherit; font-size: 13px; margin-top: 6px;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; justify-content: flex-end;">
+                    <button onclick="closeDataImportModal()" style="min-height: 34px; padding: 7px 16px; border: 1px solid #d8dee8; border-radius: 8px; background: linear-gradient(#fff, #f8fafc); color: var(--text); cursor: pointer; font-weight: 700; font-size: 13px;">취소</button>
+                    <button onclick="importDataFromCsv()" style="min-height: 34px; padding: 7px 16px; border: 1px solid #111827; border-radius: 8px; background: #111827; color: #fff; cursor: pointer; font-weight: 700; font-size: 13px;">import</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="addEventModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);">
         <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">
             <div style="background-color: #fefefe; padding: 24px; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);">
@@ -2543,6 +2576,13 @@ ${bodyRows}
             applySheetZoom();
             updateHistoryButtons();
 
+            const dataImportModal = document.getElementById('dataImportModal');
+            if (dataImportModal) {
+                dataImportModal.addEventListener('click', event => {
+                    if (event.target === dataImportModal) closeDataImportModal();
+                });
+            }
+
             const addEventModal = document.getElementById('addEventModal');
             if (addEventModal) {
                 addEventModal.addEventListener('click', event => {
@@ -2559,7 +2599,125 @@ ${bodyRows}
         });
 
         function openDataModal() {
-            alert('데이터 import 기능은 준비 중입니다');
+            const modal = document.getElementById('dataImportModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                populateImportSelects();
+            }
+        }
+
+        function closeDataImportModal() {
+            const modal = document.getElementById('dataImportModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            document.getElementById('importCsvFile').value = '';
+            document.getElementById('importCsvUrl').value = '';
+            document.getElementById('importStatusMessage').textContent = '';
+            document.getElementById('importStatusMessage').style.display = 'none';
+        }
+
+        function populateImportSelects() {
+            const yearSelect = document.getElementById('importYearSelect');
+            const monthSelect = document.getElementById('importMonthSelect');
+            const weekSelect = document.getElementById('importWeekSelect');
+
+            yearSelect.innerHTML = '';
+            YEARS.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = `${year}년`;
+                if (year === appState.selectedYear) option.selected = true;
+                yearSelect.appendChild(option);
+            });
+
+            monthSelect.innerHTML = '';
+            MONTHS.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = `${month}월`;
+                if (month === appState.selectedMonth) option.selected = true;
+                monthSelect.appendChild(option);
+            });
+
+            weekSelect.innerHTML = '';
+            for (let i = 1; i <= WEEK_COUNT; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `${i}주차`;
+                weekSelect.appendChild(option);
+            }
+        }
+
+        function showImportStatus(message, isError = false) {
+            const statusMsg = document.getElementById('importStatusMessage');
+            statusMsg.textContent = message;
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = isError ? '#fee2e2' : '#d1fae5';
+            statusMsg.style.color = isError ? '#991b1b' : '#065f46';
+        }
+
+        async function importDataFromCsv() {
+            const year = Number(document.getElementById('importYearSelect').value);
+            const month = Number(document.getElementById('importMonthSelect').value);
+            const week = Number(document.getElementById('importWeekSelect').value);
+            const fileInput = document.getElementById('importCsvFile');
+            const urlInput = document.getElementById('importCsvUrl');
+
+            if (!fileInput.files.length && !urlInput.value.trim()) {
+                showImportStatus('파일을 선택하거나 URL을 입력해주세요', true);
+                return;
+            }
+
+            try {
+                let csvText;
+
+                if (fileInput.files.length > 0) {
+                    csvText = await fileInput.files[0].text();
+                } else {
+                    const response = await fetch(urlInput.value.trim());
+                    if (!response.ok) throw new Error('URL에서 파일을 불러올 수 없습니다');
+                    csvText = await response.text();
+                }
+
+                const result = Papa.parse(csvText, { header: true });
+                const data = result.data.filter(row => row.nickname && (row.score || row.점수));
+
+                if (data.length === 0) {
+                    showImportStatus('유효한 데이터가 없습니다 (닉네임 필수)', true);
+                    return;
+                }
+
+                const key = sheetKey(year, month);
+                if (!appState.months[key]) {
+                    appState.months[key] = makeDefaultSheet(month);
+                }
+                appState.months[key] = normalizeSheet(appState.months[key], month);
+
+                const sheet = appState.months[key];
+                const nicknameCol = findSimpleWeekFieldColumn(sheet, week, '닉네임');
+                const scoreCol = findSimpleWeekFieldColumn(sheet, week, '점수');
+
+                if (nicknameCol < 0 || scoreCol < 0) {
+                    showImportStatus('주차 열을 찾을 수 없습니다', true);
+                    return;
+                }
+
+                const maxRank = Math.min(data.length, sheet.rows.length);
+                data.forEach((row, index) => {
+                    if (index >= maxRank) return;
+                    sheet.rows[index].cells[nicknameCol] = row.nickname || '';
+                    sheet.rows[index].cells[scoreCol] = row.score || row.점수 || '';
+                });
+
+                setWeekEvent(sheet, week, EVENTS[0]);
+                saveSheetData({ silent: true });
+
+                showImportStatus(`✅ ${data.length}개 데이터 import 완료!`);
+                setTimeout(() => closeDataImportModal(), 1500);
+            } catch (error) {
+                showImportStatus(`❌ 오류: ${error.message}`, true);
+            }
         }
     </script>
 </body>
